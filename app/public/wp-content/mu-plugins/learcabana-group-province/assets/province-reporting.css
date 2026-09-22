@@ -1,5 +1,5 @@
 /**
- * User Report filter bar — one row, equal field widths, single-line labels.
+ * Filter bar — labels above fields, equal columns, one row on desktop.
  */
 
 #tincanny-reporting .reporting-group-selector,
@@ -12,30 +12,43 @@
 .reporting-group-selector .reporting-group-selector__form {
 	display: flex;
 	flex-wrap: nowrap;
-	align-items: center;
+	align-items: flex-end;
 	width: 100%;
 	min-width: 0;
 	box-sizing: border-box;
-	gap: 0 4px;
+	gap: 0 10px;
 }
 
-/* Labels: one line, never shrink */
+/* Each filter: label on top, select below */
+#tincanny-reporting .lc-filter-field,
+.reporting-group-selector .lc-filter-field {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	flex: 1 1 0;
+	min-width: 120px;
+	max-width: 200px;
+	box-sizing: border-box;
+}
+
 #tincanny-reporting .reporting-group-selector__label-container,
 #tincanny-reporting .reporting-job_title-selector__label-container,
 .reporting-group-selector .reporting-group-selector__label-container,
 .reporting-group-selector .reporting-job_title-selector__label-container {
 	flex: 0 0 auto;
-	width: auto !important;
+	width: 100% !important;
 	max-width: none !important;
-	padding-right: 6px;
+	padding: 0 0 4px 0 !important;
+	margin: 0;
 	white-space: nowrap;
+	line-height: 1.2;
 }
 
 #tincanny-reporting .reporting-group-selector__label-container label,
 #tincanny-reporting .reporting-job_title-selector__label-container label,
 .reporting-group-selector .reporting-group-selector__label-container label,
 .reporting-group-selector .reporting-job_title-selector__label-container label {
-	display: inline-block;
+	display: block;
 	margin: 0;
 	padding: 0;
 	white-space: nowrap;
@@ -44,7 +57,6 @@
 	font-weight: 600;
 }
 
-/* Equal-width selects that share one row */
 #tincanny-reporting .reporting-group-selector__select-container,
 #tincanny-reporting .reporting-job_title-selector__select-container,
 #tincanny-reporting .lc-org-select-wrap,
@@ -53,11 +65,11 @@
 .reporting-group-selector .reporting-job_title-selector__select-container,
 .reporting-group-selector .lc-org-select-wrap,
 .reporting-group-selector .lc-province-select-wrap {
-	flex: 1 1 0;
-	width: auto !important;
-	min-width: 110px;
-	max-width: 180px;
-	padding-right: 6px;
+	flex: 0 0 auto;
+	width: 100% !important;
+	max-width: 100% !important;
+	min-width: 0;
+	padding: 0 !important;
 	box-sizing: border-box;
 }
 
@@ -78,62 +90,89 @@
 .reporting-group-selector #reporting-job_title-selector {
 	width: 100% !important;
 	max-width: 100% !important;
-	min-height: 0 !important;
-	height: auto !important;
+	min-height: 32px !important;
+	height: 32px !important;
 	font-size: 13px !important;
+	line-height: 1.3 !important;
 	margin: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
 	box-sizing: border-box !important;
 }
 
+/* Match Select2 (Group) height/width to native selects */
+#tincanny-reporting .reporting-group-selector .select2-container,
+#tincanny-reporting .reporting-group-selector .select2-container.tclr-select2,
+.reporting-group-selector .select2-container,
+.reporting-group-selector .select2-container.tclr-select2 {
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+#tincanny-reporting .reporting-group-selector .select2-container .select2-selection--single,
+#tincanny-reporting .reporting-group-selector .select2-container--default .select2-selection--single,
+.reporting-group-selector .select2-container .select2-selection--single,
+.reporting-group-selector .select2-container--default .select2-selection--single {
+	height: 32px !important;
+	min-height: 32px !important;
+	box-sizing: border-box !important;
+}
+
+#tincanny-reporting .reporting-group-selector .select2-container--default .select2-selection--single .select2-selection__rendered,
+.reporting-group-selector .select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 30px !important;
+	font-size: 13px !important;
+	padding-left: 8px !important;
+	padding-right: 24px !important;
+}
+
+#tincanny-reporting .reporting-group-selector .select2-container--default .select2-selection--single .select2-selection__arrow,
+.reporting-group-selector .select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: 30px !important;
+	top: 1px !important;
+}
+
 #tincanny-reporting .reporting-group-selector__submit-container,
-.reporting-group-selector .reporting-group-selector__submit-container {
+#tincanny-reporting .lc-filter-submit,
+.reporting-group-selector .reporting-group-selector__submit-container,
+.reporting-group-selector .lc-filter-submit {
 	flex: 0 0 auto;
-	padding-left: 2px;
+	padding: 0;
+	align-self: flex-end;
 }
 
 #tincanny-reporting input#reporting-group-selector__submit,
 .reporting-group-selector input#reporting-group-selector__submit {
+	height: 32px !important;
+	min-height: 32px !important;
+	box-sizing: border-box !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	line-height: 30px !important;
 	white-space: nowrap;
 }
 
-/* Only stack on very small phones */
 @media screen and (max-width: 560px) {
 	#tincanny-reporting .reporting-group-selector__form,
 	.reporting-group-selector .reporting-group-selector__form {
 		flex-wrap: wrap;
+		align-items: stretch;
 	}
 
-	#tincanny-reporting .reporting-group-selector__label-container,
-	#tincanny-reporting .reporting-job_title-selector__label-container,
-	.reporting-group-selector .reporting-group-selector__label-container,
-	.reporting-group-selector .reporting-job_title-selector__label-container {
+	#tincanny-reporting .lc-filter-field,
+	.reporting-group-selector .lc-filter-field {
 		flex: 0 0 100%;
-		width: 100% !important;
-		padding-right: 0;
-		padding-top: 6px;
-	}
-
-	#tincanny-reporting .reporting-group-selector__select-container,
-	#tincanny-reporting .reporting-job_title-selector__select-container,
-	#tincanny-reporting .lc-org-select-wrap,
-	#tincanny-reporting .lc-province-select-wrap,
-	.reporting-group-selector .reporting-group-selector__select-container,
-	.reporting-group-selector .reporting-job_title-selector__select-container,
-	.reporting-group-selector .lc-org-select-wrap,
-	.reporting-group-selector .lc-province-select-wrap {
-		flex: 0 0 100%;
-		width: 100% !important;
 		max-width: 100%;
 		min-width: 0;
-		padding-right: 0;
 	}
 
 	#tincanny-reporting .reporting-group-selector__submit-container,
-	.reporting-group-selector .reporting-group-selector__submit-container {
+	#tincanny-reporting .lc-filter-submit,
+	.reporting-group-selector .reporting-group-selector__submit-container,
+	.reporting-group-selector .lc-filter-submit {
 		flex: 0 0 100%;
 		width: 100%;
-		margin-top: 6px;
-		padding-left: 0;
+		margin-top: 8px;
 	}
 
 	#tincanny-reporting input#reporting-group-selector__submit,
