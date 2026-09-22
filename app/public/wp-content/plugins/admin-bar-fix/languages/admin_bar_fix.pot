@@ -1,0 +1,84 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Better Admin Bar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-01 08:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.0; wp-5.0"
+
+#: admin-bar-fix.php:222
+msgid "* admin bar will be hidden on screens with width smaller than this"
+msgstr ""
+
+#: admin-bar-fix.php:274
+msgid "* how fast the admin bar should expand on hover"
+msgstr ""
+
+#: admin-bar-fix.php:292
+msgid "* how long to wait before admin bar collapse on mouse leave"
+msgstr ""
+
+#: admin-bar-fix.php:283
+msgid "* how long to wait before admin bar expand on mouse enter"
+msgstr ""
+
+#: admin-bar-fix.php:255
+msgid "* opacity of inactive admin bar"
+msgstr ""
+
+#: admin-bar-fix.php:264
+msgid "* visible width of inactive admin bar"
+msgstr ""
+
+#: admin-bar-fix.php:265
+msgid "** in ghost style it is height"
+msgstr ""
+
+#: admin-bar-fix.php:270
+msgid "Animation duration"
+msgstr ""
+
+#: admin-bar-fix.php:227
+msgid "Floating admin bar"
+msgstr ""
+
+#: admin-bar-fix.php:197
+msgid "Hide frontend admin bar for these user roles"
+msgstr ""
+
+#: admin-bar-fix.php:208
+msgid "Hide items from admin bar"
+msgstr ""
+
+#: admin-bar-fix.php:251
+msgid "Inactive opacity"
+msgstr ""
+
+#: admin-bar-fix.php:260
+msgid "Inactive size"
+msgstr ""
+
+#: admin-bar-fix.php:279
+msgid "Mouse enter delay"
+msgstr ""
+
+#: admin-bar-fix.php:288
+msgid "Mouse leave delay"
+msgstr ""
+
+#: admin-bar-fix.php:239
+msgid "Position"
+msgstr ""
+
+#: admin-bar-fix.php:218
+msgid "Show frontend admin bar only on screens bigger than"
+msgstr ""

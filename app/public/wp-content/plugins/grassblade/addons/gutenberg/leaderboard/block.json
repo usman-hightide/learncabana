@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "grassblade/leaderboard",
+    "version": "1.0",
+    "title": "Leaderboard",
+    "category": "grassblade-blocks",
+    "icon": "universal-access-alt",
+    "description": "You can Add Content Leader-Board for xAPI content.",
+    "attributes": {
+        "content_id": {"type": "string"},
+        "role": {"type": "string", "default": "all"},
+        "score": {"type": "string"},
+        "limit": {"type": "string", "default": 20},
+        "className": {"type": "string"}
+    },
+    "supports": {
+        "html": false
+    },
+    "textdomain": "grassblade",
+    "render": "file:./render.php"
+}

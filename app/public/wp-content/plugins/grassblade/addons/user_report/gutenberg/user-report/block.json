@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "grassblade/user-report",
+    "version": "1.0",
+    "title": "User Report",
+    "category": "grassblade-blocks",
+    "icon": "id-alt",
+    "description": "You can add User Report for xAPI courses.",
+    "attributes": {
+        "bg_color": {"type": "string", "default": "#83BA39"},
+        "filter": {"type": "string", "default": "attempted"},
+        "className": {"type": "string"}
+    },
+    "supports": {
+        "html": false
+    },
+    "textdomain": "grassblade",
+    "editorScript": "file:./block.js"
+}

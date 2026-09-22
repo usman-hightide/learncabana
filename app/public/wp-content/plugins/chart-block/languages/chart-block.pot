@@ -1,0 +1,314 @@
+# Copyright (C) 2024 bPlugins
+# This file is distributed under the GPLv3.
+msgid ""
+msgstr ""
+"Project-Id-Version: Chart Block 1.1.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/chart-block\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-09-01T14:17:45+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: chart-block\n"
+
+#. Plugin Name of the plugin
+msgid "Chart Block"
+msgstr ""
+
+#. Description of the plugin
+msgid "Represent your data by symbols, such as bars, lines, or pie charts."
+msgstr ""
+
+#. Author of the plugin
+msgid "bPlugins"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://bplugins.com"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3616
+#: dist/editor.js:3629
+msgid "Line"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3617
+msgid "Bar"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3618
+msgid "Pie"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3619
+msgid "Radar"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3620
+msgid "Doughnut"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3621
+msgid "Polar Area"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3625
+msgid "Circle"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3626
+msgid "Cross"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3627
+msgid "Cross Rot"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3628
+msgid "Dash"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3630
+msgid "Rect"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3631
+msgid "Rect Rounded"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3632
+msgid "Rect Rot"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3633
+msgid "Star"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3634
+msgid "Triangle"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3790
+msgid "Add or Remove Datasets"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3795
+msgid "Remove this Dataset"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3804
+msgid "Add New Dataset"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3809
+msgid "Label:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3818
+msgid "Dataset Background Color"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3822
+msgid "Dataset Border Color"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3843
+msgid "Point Style:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3848
+#: dist/editor.js:3851
+msgid "Remove"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3853
+#: dist/editor.js:3856
+msgid "Duplicate"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3861
+msgid "Add Dataset Value"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3866
+msgid "Chart Settings"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3868
+msgid "Type:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3871
+msgid "Use single dataset value for 'Pie', 'Doughnut', and 'Polar Area'"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3873
+msgid "Width:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3875
+msgid "Height:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3877
+msgid "Background:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3879
+msgid "Text Color:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3881
+msgid "Show X Scale"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3883
+msgid "Show X Grid Line"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3885
+msgid "Show Y Scale"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3887
+msgid "Show Y Grid Line"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3889
+msgid "Grid Line Color:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3893
+msgid "Title & Subtitle Settings"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3894
+msgid "Show Title"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3897
+msgid "Title:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3901
+msgid "Title Font Size:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3904
+msgid "Title Color:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3907
+msgid "Show Subtitle"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3910
+msgid "Subtitle:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3914
+msgid "Subtitle Font Size:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3917
+msgid "Subtitle Color:"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3922
+msgid "Download Settings"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3923
+msgid "Download Button"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3930
+msgid "Chart in left"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3931
+msgid "Chart in center"
+msgstr ""
+
+#: dist/editor.js:1
+#: dist/editor.js:3932
+msgid "Chart in right"
+msgstr ""
+
+#: inc/block.json
+msgctxt "block title"
+msgid "Chart"
+msgstr ""
+
+#: inc/block.json
+msgctxt "block description"
+msgid "Graphical representation for data visualization."
+msgstr ""
+
+#: inc/block.json
+msgctxt "block keyword"
+msgid "charts"
+msgstr ""
+
+#: inc/block.json
+msgctxt "block keyword"
+msgid "line charts"
+msgstr ""
+
+#: inc/block.json
+msgctxt "block keyword"
+msgid "pie charts"
+msgstr ""

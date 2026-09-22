@@ -1,0 +1,230 @@
+.button-lrstest {
+    background-color: #f09f0a;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer;
+}
+.button-lrstest:hover {
+    background-color: orange;
+}
+
+.lrstest-diagram {
+    margin: 20px;
+    text-align: center;
+    font-size: 25px;
+}
+.lrstest-diagram .dashicons {
+    font-size: 50px;
+    width: 6%;
+    min-width: 50px;
+    height: 80px;
+}
+.lrstest-diagram.connecting .dashicons.highlighted, .lrstest-diagram.connected .dashicons {
+    color: green;
+}
+.lrstest-diagram.failed .dashicons {
+    color: red;
+}
+.lrstest-diagram .dashicons-yes, .lrstest-diagram .dashicons-no {
+    display: none;
+}
+.lrstest-diagram.failed .dashicons-no, .lrstest-diagram.connected .dashicons-yes {
+    display: inline-block;
+}
+.lrstest-diagram.failed .dashicons-minus.middle, .lrstest-diagram.connected .dashicons-minus.middle {
+    display: none;
+}
+.grassblade_lrstest {
+	max-width: 1200px;
+	margin: auto;
+}
+.grassblade_lrstest .status_div {
+    text-align: center;
+}
+.grassblade_lrstest .passed {
+    color: green;
+}
+.grassblade_lrstest .failed {
+    color: red;
+}
+.grassblade_lrstest .verbs, .grassblade_lrstest .sub-tests {
+    text-align: center;
+}
+.grassblade_lrstest .verbs > div {
+    display: none;
+}
+.grassblade_lrstest .verbs > div.passed, .grassblade_lrstest .verbs > div.failed {
+    display: block;
+}
+.grassblade_lrstest .verbs .dashicons-yes, .grassblade_lrstest .verbs .dashicons-no {
+    display: none;
+}
+.grassblade_lrstest .verbs .passed .dashicons-yes, .grassblade_lrstest .verbs .failed .dashicons-no {
+    display: inline-block;
+}
+.grassblade_lrstest [data-test-name] .test-title {
+    cursor: pointer;
+}
+.grassblade_lrstest .dashicons-info {
+    cursor: pointer;
+    color: #2406b4;
+}
+.grassblade_lrstest .dashicons-info > div {
+    display: none;
+}
+.grassblade_lrstest h1.test-title {
+    text-align: center;
+    margin: 20px;
+    color: blue;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.grassblade_lrstest .test-info {
+    margin: 30px;
+}
+.grassblade_test_lightbox h3 {
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+.grassblade_test_lightbox {
+    padding: 20px !important;
+}
+
+/* New CSS */
+
+.lrs-test {
+	/*
+    min-height: 100px;
+    background: #f3f3ff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 3px;
+    */
+}
+
+.completions_header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: whitesmoke;
+    width: 100%;
+    gap: 10px;
+    padding: 15px 0;
+    border-radius: 3px;
+}
+
+.completions_header h1{
+    color: #6fac1e;
+    margin: 0;
+}
+
+.xapi_content_selector, .completion_test_form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 80%;
+    width: 100%;
+    gap: 10px;
+}
+
+
+.completion_and_statement_result {
+    text-align: center;
+}
+
+.sub-tests {
+	/*
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+    */
+}
+
+.sub-tests > div {
+	/*
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: beige;
+    border-radius: 3px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    */
+}
+
+.gb_bg_green {
+    background: #b2ff9e;
+    color: black;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.gb_bg_red {
+    background: #ffaaaa;
+    color: black;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.gb_bg_yellow {
+    background: #fafc90;
+    color: black;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.start_test_button {
+    padding: 10px 20px;
+    font-size: 15px;
+    background: #83BA39;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#reset_learner_progress {
+    align-self: end;
+}
+.reset_learner_progress_button {
+    font-size: 10px;
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+}
+
+.re_run_triggers {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+pre {
+    background: whitesmoke;
+    padding: 5px;
+}
+
+
+.completions-tests-container .lrs-test {
+	margin-top: 40px;
+}
+
+.completion_test_form table {
+    text-align: left;
+    margin: 10px;
+}
+.completion_test_form table select, .completion_test_form table input {
+    width: 99%;
+    height: 20px;
+}
+.completion_test_form table td, .completion_test_form table th {
+    padding: 5px;
+    vertical-align: top;
+}

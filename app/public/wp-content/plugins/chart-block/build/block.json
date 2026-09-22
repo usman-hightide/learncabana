@@ -1,0 +1,715 @@
+{
+  "apiVersion": 3,
+  "name": "b-chart/chart",
+  "title": "Chart",
+  "description": "Graphical representation for data visualization.",
+  "category": "widgets",
+  "keywords": [
+    "charts",
+    "line charts",
+    "pie charts"
+  ],
+  "textdomain": "chart-block",
+  "attributes": {
+    "align": {
+      "type": "string",
+      "default": ""
+    },
+    "data": {
+      "type": "object",
+      "default": {
+        "labels": [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June"
+        ],
+        "datasets": [
+          {
+            "label": "T-Shirts Sell 2021",
+            "data": [
+              3,
+              9,
+              10,
+              16,
+              14,
+              16
+            ],
+            "backgroundColor": [
+              "#ff638433",
+              "#36a28733",
+              "#ffce5633",
+              "#4bc0c033",
+              "#9966ff33",
+              "#ff9f4033"
+            ],
+            "borderColor": [
+              "#ff6384",
+              "#36a287",
+              "#ffce56",
+              "#4bc0c0",
+              "#9966ff",
+              "#ff9f40"
+            ],
+            "tension": 0.4,
+            "borderWidth": 2,
+            "hoverBorderWidth": 2,
+            "pointRadius": 3,
+            "pointHoverRadius": 4,
+            "pointStyle": "triangle"
+          },
+          {
+            "label": "Shoes Sell 2021",
+            "data": [
+              5,
+              7,
+              12,
+              14,
+              13,
+              17
+            ],
+            "backgroundColor": [
+              "#ff638433",
+              "#36a28733",
+              "#ffce5633",
+              "#4bc0c033",
+              "#9966ff33",
+              "#ff9f4033"
+            ],
+            "borderColor": [
+              "#ff6384",
+              "#36a287",
+              "#ffce56",
+              "#4bc0c0",
+              "#9966ff",
+              "#ff9f40"
+            ],
+            "tension": 0.4,
+            "borderWidth": 2,
+            "hoverBorderWidth": 2,
+            "pointRadius": 3,
+            "pointHoverRadius": 4,
+            "pointStyle": "circle"
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "default": "line"
+    },
+    "width": {
+      "type": "string",
+      "default": "80%"
+    },
+    "height": {
+      "type": "string",
+      "default": "450px"
+    },
+    "background": {
+      "type": "object",
+      "default": {
+        "color": "#0000"
+      }
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#666"
+    },
+    "isXScale": {
+      "type": "boolean",
+      "default": true
+    },
+    "isXGridLine": {
+      "type": "boolean",
+      "default": true
+    },
+    "isYScale": {
+      "type": "boolean",
+      "default": true
+    },
+    "isYGridLine": {
+      "type": "boolean",
+      "default": true
+    },
+    "gridLineColor": {
+      "type": "string",
+      "default": "#0000001a"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "center"
+    },
+    "isTitle": {
+      "type": "boolean",
+      "default": true
+    },
+    "title": {
+      "type": "string",
+      "default": "Chart Title"
+    },
+    "titleFontSize": {
+      "type": "number",
+      "default": 22
+    },
+    "titleColor": {
+      "type": "string",
+      "default": "#146EF5"
+    },
+    "isSubtitle": {
+      "type": "boolean",
+      "default": false
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Chart Subtitle"
+    },
+    "subtitleFontSize": {
+      "type": "number",
+      "default": 13
+    },
+    "subtitleColor": {
+      "type": "string",
+      "default": "#FF7A00"
+    },
+    "isDownload": {
+      "type": "boolean",
+      "default": false
+    },
+    "themeStyle": {
+      "type": "string",
+      "default": "themeOne"
+    },
+    "columnBarData": {
+      "type": "array",
+      "default": [
+        {
+          "label": "T-Shirts ",
+          "value": 40,
+          "color": "#3b82f6"
+        },
+        {
+          "label": "Jeans",
+          "value": 67,
+          "color": "#ef4444"
+        },
+        {
+          "label": "Jackets",
+          "value": 38,
+          "color": "#10b981"
+        },
+        {
+          "label": "Hoodies",
+          "value": 82,
+          "color": "#f59e0b"
+        },
+        {
+          "label": "Shoess",
+          "value": 78,
+          "color": "#ed42b0"
+        }
+      ]
+    },
+    "categories": {
+      "type": "array",
+      "default": [
+        {
+          "id": "january",
+          "name": "January",
+          "order": 1
+        },
+        {
+          "id": "february",
+          "name": "February",
+          "order": 2
+        },
+        {
+          "id": "march",
+          "name": "March",
+          "order": 3
+        }
+      ]
+    },
+    "series": {
+      "type": "array",
+      "default": [
+        {
+          "id": "electronics",
+          "name": "Electronics",
+          "color": "#3b82f6",
+          "order": 1
+        },
+        {
+          "id": "clothing",
+          "name": "Clothing",
+          "color": "#10b981",
+          "order": 2
+        },
+        {
+          "id": "home",
+          "name": "Home & Garden ",
+          "color": "#f59e0b",
+          "order": 3
+        }
+      ]
+    },
+    "dataPoints": {
+      "type": "array",
+      "default": [
+        {
+          "category_id": "january",
+          "series_id": "electronics",
+          "value": 30
+        },
+        {
+          "category_id": "january",
+          "series_id": "clothing",
+          "value": 45
+        },
+        {
+          "category_id": "january",
+          "series_id": "home",
+          "value": 25
+        },
+        {
+          "category_id": "february",
+          "series_id": "electronics",
+          "value": 40
+        },
+        {
+          "category_id": "february",
+          "series_id": "clothing",
+          "value": 50
+        },
+        {
+          "category_id": "february",
+          "series_id": "home",
+          "value": 35
+        },
+        {
+          "category_id": "march",
+          "series_id": "electronics",
+          "value": 35
+        },
+        {
+          "category_id": "march",
+          "series_id": "clothing",
+          "value": 55
+        },
+        {
+          "category_id": "march",
+          "series_id": "home",
+          "value": 40
+        }
+      ]
+    },
+    "scatterData": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Product A",
+          "color": "#3b82f6",
+          "axiosData": [
+            {
+              "axis": "Battery"
+            }
+          ],
+          "data": [
+            {
+              "x": 23,
+              "y": 45,
+              "size": 1.5,
+              "label": "IPhone",
+              "singleColor": "red",
+              "value": 80
+            }
+          ]
+        },
+        {
+          "name": "Product B",
+          "color": "rgb(11, 245, 124)",
+          "axiosData": [
+            {
+              "axis": "Battery"
+            }
+          ],
+          "data": [
+            {
+              "x": 45,
+              "y": 60,
+              "size": 3.5,
+              "label": "MacBook",
+              "singleColor": "blue",
+              "value": 20
+            }
+          ]
+        }
+      ]
+    },
+    "gaugeChartData": {
+      "type": "array",
+      "default": [
+        {
+          "min": 0,
+          "max": 30,
+          "color": "#ef4444",
+          "label": "Low"
+        },
+        {
+          "min": 30,
+          "max": 40,
+          "color": "#f59e0b",
+          "label": "Medium"
+        },
+        {
+          "min": 40,
+          "max": 60,
+          "color": "#10b981",
+          "label": "High"
+        },
+        {
+          "min": 60,
+          "max": 100,
+          "color": "#006BA1",
+          "label": "Very High"
+        }
+      ]
+    },
+    "gaugeChartOptions": {
+      "type": "object",
+      "default": {
+        "gaugeChartSize": {
+          "desktop": 600,
+          "tablet": 450,
+          "mobile": 320
+        },
+        "title": "Performance Score",
+        "minValue": 0,
+        "maxValue": 100,
+        "actualValue": 75,
+        "gaugeType": "full",
+        "needleStyle": "arrow",
+        "showValue": "below",
+        "valueFormat": "number",
+        "animation": true,
+        "currencySymbol": ""
+      }
+    },
+    "candlestickData": {
+      "type": "array",
+      "default": [
+        {
+          "d": "2026-03-01",
+          "o": 150,
+          "h": 155,
+          "l": 148,
+          "c": 152
+        }
+      ]
+    },
+    "options": {
+      "type": "object",
+      "default": {
+        "polygonFill": false,
+        "barChartWidth": {
+          "desktop": "",
+          "tablet": "",
+          "mobile": ""
+        },
+        "barChartHeight": {
+          "desktop": 500,
+          "tablet": 500,
+          "mobile": 450
+        },
+        "groupChartWidth": {
+          "desktop": 100,
+          "tablet": 100,
+          "mobile": 100
+        },
+        "groupChartHeight": {
+          "desktop": 400,
+          "tablet": 400,
+          "mobile": 530
+        },
+        "multiChartWidth": {
+          "desktop": 100,
+          "tablet": 100,
+          "mobile": 100
+        },
+        "multChartHeight": {
+          "desktop": 400,
+          "tablet": 400,
+          "mobile": 400
+        },
+        "chartType": "column",
+        "lineChartType": "multi",
+        "chartTitleShow": false,
+        "chartLabelShow": true,
+        "groupChartTitleShow": false,
+        "groupSubTitleShow": false,
+        "orientation": "vertical",
+        "showValues": true,
+        "showGrid": true,
+        "groupGridShow": true,
+        "showLegend": true,
+        "groupShowLegend": true,
+        "groupValue": false,
+        "downloadButton": false,
+        "stackedValue": true,
+        "chartTitle": "Product Sales Comparison ",
+        "chartSubTitle": "Comparison of Electronics, Clothing, and Home products",
+        "xAxisLabel": "Products",
+        "yAxisLabel": "Sales (Units )",
+        "borderRadius": "",
+        "groupBorderRadius": 4,
+        "stackBorderRadius": "",
+        "stackBarSpace": false,
+        "tickStep": 15,
+        "valueDisplay": "number",
+        "pieChartSize": 200,
+        "pieWidth": {
+          "desktop": "100%",
+          "tablet": "",
+          "mobile": ""
+        },
+        "startAngle": -90,
+        "borderSpacing": 2,
+        "labelPosition": "outside",
+        "showPercentages": true,
+        "showlabel": true,
+        "explodedSegments": [],
+        "explodeDistance": 10,
+        "donutMode": false,
+        "isSemiCircle": false,
+        "donutThickness": 10,
+        "pieShowLegend": true,
+        "lineChartStyle": "dashed",
+        "curveType": "linear",
+        "pointStyle": "circle",
+        "pointSize": 5,
+        "fillArea": "none",
+        "fillOpacity": 0.5,
+        "tension": 0.4,
+        "lineWidth": 2,
+        "lineColor": "#1a13e0",
+        "pointColor": false,
+        "lineShow": true,
+        "showGridX": true,
+        "showGridY": true,
+        "singleLinecolor": "green",
+        "showLines": false,
+        "xAxisType": "linear",
+        "yAxisType": "linear",
+        "bubbleMode": false,
+        "funnelOrientation": "vertical",
+        "neckWidth": 5,
+        "funnelGap": 3,
+        "funnelShowPercentages": true,
+        "funnelShowLabels": true,
+        "heatmapWidth": {
+          "desktop": "",
+          "tablet": "",
+          "mobile": ""
+        },
+        "heatmapHeight": {
+          "desktop": 350,
+          "tablet": 300,
+          "mobile": 250
+        },
+        "cellShape": "square",
+        "cellSpacing": 2,
+        "colorScale": "sequential",
+        "heatmapColors": [
+          "#3b82f6",
+          "#8EF527",
+          "#7043f0"
+        ],
+        "candlestickChartType": "candlestick",
+        "currencySymbol": "",
+        "upColor": "#16a34a",
+        "downColor": "#dc2626"
+      }
+    },
+    "styles": {
+      "type": "object",
+      "default": {
+        "backgroundColor": "#91a1a000",
+        "gridColor": "#09090d",
+        "groupGridLineColor": "#09090d",
+        "axisLineColor": "#1f2937",
+        "groupAxisLineColor": "#a7acb03d",
+        "toolTipLineColor": "#a7acb0",
+        "titleColor": "#1f2937",
+        "titleTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 600,
+          "fontSize": {
+            "desktop": 32,
+            "tablet": 18,
+            "mobile": 16
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "groupSubTitleColor": "#1f2937",
+        "groupSubTitleTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 15,
+            "tablet": 14,
+            "mobile": 13
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "valueColor": "#1f2937",
+        "valueTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 13,
+            "tablet": 13,
+            "mobile": 12
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "textColor": "#1f2937",
+        "textTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 14,
+            "tablet": 14,
+            "mobile": 12
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "gridLabelColor": "#1f2937",
+        "gridLabelTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 14,
+            "tablet": 14,
+            "mobile": 12
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "legendLabelColor": "#334155",
+        "legendLabelTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 600,
+          "fontSize": {
+            "desktop": 14,
+            "tablet": 14,
+            "mobile": 12
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "legendValueColor": "#1f2937",
+        "legendValueTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 600,
+          "fontSize": {
+            "desktop": 20,
+            "tablet": 19,
+            "mobile": 19
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "statBgColor": "#dddddde3",
+        "statTextColor": "#0e0d0de3",
+        "statTextTypo": {
+          "fontFamily": "Manrope",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 16,
+            "tablet": 14,
+            "mobile": 14
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "statValueTypo": {
+          "fontFamily": "",
+          "fontCategory": "sans-serif",
+          "fontWeight": 400,
+          "fontSize": {
+            "desktop": 15,
+            "tablet": 14,
+            "mobile": 12
+          },
+          "fontStyle": "",
+          "textTransform": "",
+          "textDecoration": "",
+          "lineHeight": "",
+          "letterSpace": ""
+        },
+        "candlestickLabelColor": "#64748b"
+      }
+    }
+  },
+  "supports": {
+    "align": [
+      "wide",
+      "full"
+    ],
+    "html": false
+  },
+  "example": {
+    "attributes": {
+      "preview": true
+    }
+  },
+  "editorScript": [
+    "file:./index.js",
+    "chartJS"
+  ],
+  "editorStyle": "file:./index.css",
+  "style": "file:./view.css",
+  "render": "file:./render.php",
+  "viewScript": [
+    "file:./view.js",
+    "chartJS"
+  ]
+}

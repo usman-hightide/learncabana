@@ -1,0 +1,66 @@
+	<script>
+		document.ondragstart = function() {
+			return false;
+		};
+		document.ondrop = function() {
+			return false;
+		};
+		document.oncontextmenu = function() {
+			return false;
+		};
+		window.onkeydown =  function(evt) {
+			evt = evt||window.event // IE support
+			var c = evt.keyCode
+			var ctrlDown = evt.ctrlKey||evt.metaKey // Mac support
+
+			// Check for Alt+Gr (http://en.wikipedia.org/wiki/AltGr_key)
+			if (ctrlDown && evt.altKey) return true
+			// Check for ctrl+c, v and x
+			else if (ctrlDown && c==67) return false // c
+			else if (ctrlDown && c==86) return false // v
+			else if (ctrlDown && c==88) return false // x
+			else if (c==44) stopPrntScr(); // PrintScr
+
+			// Otherwise allow
+			return true
+		}
+		document.addEventListener("keyup", function (e) {
+			var keyCode = e.keyCode ? e.keyCode : e.which;
+            if (keyCode == 44) {
+                stopPrntScr();
+            }
+        });
+		function stopPrntScr() {
+			var inpFld = document.createElement("input");
+			inpFld.setAttribute("value", ".");
+			inpFld.setAttribute("width", "0");
+			inpFld.style.height = "0px";
+			inpFld.style.width = "0px";
+			inpFld.style.border = "0px";
+			document.body.appendChild(inpFld);
+			inpFld.select();
+			document.execCommand("copy");
+			inpFld.remove(inpFld);
+		}
+		function AccessClipboardData() {
+			try {
+				window.clipboardData.setData('text', "Access   Restricted");
+			} catch (err) {
+			}
+		}
+		setInterval("AccessClipboardData()", 300);
+	</script>
+	<style>
+		body {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-user-drag: none;
+			user-drag: none;
+			-webkit-touch-callout: none;
+		}
+		@media print {
+			html, body {display:none;}
+		}
+	</style>

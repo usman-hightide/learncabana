@@ -1,0 +1,113 @@
+= [1.6.7] 2026-01-28 =
+
+* Tweak - Set minimum required PHP version to 7.4.
+* Tweak - Updated required WP version to 6.6.
+
+= [1.6.6] =
+
+* Fix - Fixed an issue with Failed Quiz Notifications being sent out for quizzes that have ungraded essay questions.
+* Fix - Fixed fatal error when LearnDash Notifications Logger is not available.
+* Fix - Resolved `_load_textdomain_just_in_time()` notice errors that showed up in Wordpress 6.8.
+
+= [1.6.5] =
+
+* Deprecate - Classes: `LearnDash_Notifications_Logs_Page`.
+* Fix - Resolved a fatal error in Notifications Logger when `AUTH_SALT` is missing.
+* Fix - Resolved issue with fetching courses for the `Lesson Available for user` notification.
+* Fix - Resolved PHP warnings.
+* Fix - Resolved a javascript error on the Notifications edit page when removing a condition.
+* Fix - Resolved an issue where the `learndash_notifications_send_notification` filter hook was not working.
+* Tweak - Added actions: `learndash_notifications_uninstall`.
+* Tweak - Migrated the LD Settings > Notifications > Logs to the main log in LD Settings > Advanced > Logs page.
+
+= [1.6.4] =
+
+* Deprecate - Classes: `LearnDash\Notifications\Container`, `LearnDash\Notifications\App`.
+* Tweak - Added compatibility with LearnDash Core v4.13.0.
+* Tweak - Updated functions: `learndash_notifications_extra_autoloading`.
+
+= [1.6.3] =
+
+* Deprecate - Classes: `LearnDash_Dependency_Check_LD_Notifications`, `LearnDash_Notifications`.
+* Deprecate - Functions: `learndash_notifications`.
+* Fix - "user hasn't completed a quiz" condition field doesn't have additional options.
+* Fix - "X days before course expires" trigger doesn't work as expected.
+* Fix - User enrolled into course notification is not triggered when a user is enroll via LD Zapier app course enrollment action.
+
+= [1.6.2] =
+
+* Feature - Add "Exclude pre-ordered course" option on Enroll into a course trigger.
+* Fix - Undefined array key error on Essay question has been put into graded status trigger.
+* Fix - Any object option in object field (course, lesson, etc) not saving.
+* Fix - Fatal error when using Assignment has been uploaded trigger and Assignment has been uploaded condition.
+* Fix - A scheduled lesson is available to user email not sending.
+* Tweak - Better object select2 fields (course, lesson, etc) search results to support pagination.
+
+= [1.6.1] =
+
+* Feature - New action hooks 'learndash_notifications_email_sent' and 'learndash_notifications_email_failed'.
+* Fix - Triggering objects settings in notification model don't work correctly filtering events that triggers set up notifications.
+* Fix - User can't select specific quiz associated with a lesson because quiz was only direct child to topic. Now it can be direct child of course, lesson, or topic.
+
+= [1.6.0] =
+
+* Feature - Multi triggers/conditions support.
+* Fix - Disable course fields when using quiz trigger.
+* Fix - Send single email instead of multiple for "User hasn't logged in for X days" trigger when multiple courses are involved.
+* Fix - Reschedule drip lesson when user enroll date changes.
+* Fix - "User hasn't logged in for X days" trigger correctly sends to users now.
+* Fix - Prevent "A scheduled lesson is available to user" notifications sending from wrong course.
+* Fix - Display specified course lessons in notifications page listing column.
+* Fix - User receives quiz failed notification when quiz not failed.
+* Fix - Group leaders not receiving emails for groups they are leaders of.
+* Fix - Allow group URL in notifications shortcodes.
+* Tweak - 'learndash_notifications_subscription_page_slug' filter to modify subscriptions page slug.
+
+= [1.5.4] =
+
+* Fix - Update LearnDash strings using LD custom label.
+* Fix - Use learndash_quiz_submitted action hook instead of learndash_quiz_completed.
+* Fix - Make sure retrieved group leaders has group leader role.
+* Fix - Before course expires notification is sent before set value.
+* Fix - Make sure pre selected value is selected on edit screen.
+* Fix - Group selector returns empty result.
+* Fix - Use learndash_emails_send instead of wp_mail to sync with LD core.
+* Fix - Before and after expiry notification is not sent when user re-enrolls.
+* Fix - Issue when drip lesson triggered for all lessons.
+* Tweak - AJAX search support on notifications list posts filter.
+* Tweak - Improve LD posts selector logic especially for site with big number of courses, lessons, etc.
+* Tweak - Change post selectors in notification metabox to use select2 and dynamic AJAX options.
+
+= [1.5.3] =
+
+* Fix - Update the trigger "user hasn't logged in for X days" to group the emails into one rather than sending out mass separate emails.
+* Fix - Notification for drip lesson doesn't update the send time if enrollment date gets changed.
+* Fix - PHP warnings/notices.
+* Tweak - Added a filter to switch the notification content to RTL `learndash_notifications_email_rtl`.
+
+= [1.5.2] =
+
+* Fix - Fixed issue where when a quiz notification was set in some rare instances this prevented the student from being able to complete the quiz.
+
+= [1.5.1] =
+
+* Feature - Added ability to chose if the notification should only send one time or recurring for the trigger “User hasn’t logged In for “X” days.
+* Fix - Fixed email sending issue with group leaders.
+* Fix - Fixed emails sending in bulk on updating.
+
+= [1.5.0] =
+
+* Feature - Added notifications can now be updated after they have been saved.
+* Feature - Added duration unit can now be minutes, hours, and days.
+* Fix - Updated the triggers codebase to improve notifications sending system.
+* Fix - Updated the log screen to make it easier to track what is happening within the system.
+* Tweak - Removed the every minute cron and replaced with a single scheduled event to check rather than running blind checks.
+
+= [1.4.1] =
+
+* Fix - Updated delay field unchangeable for edit to prevent issue with delayed emails.
+* Fix - Updated use of global delete function instead of create new queries in delete functions.
+* Fix - Updated remove `learndash_notifications_delete_delayed_emails_when_unenrolled` hooked function because it already exists in `includes/database.php`.
+* Fix - Updated use of `learndash_get_users_for_course()` to pull course users instead of access list meta only.
+* Fix - Fixed lesson available notification not queueing multiple notifications in DB if there are more than 1 notifications posts.
+* Fix - Fixed regex pattern for searching notifications by shortcode data key value pair.

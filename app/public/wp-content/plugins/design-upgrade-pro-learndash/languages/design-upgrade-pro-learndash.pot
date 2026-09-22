@@ -1,0 +1,1110 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-07-18 11:56-0600\n"
+"PO-Revision-Date: 2019-07-18 11:57-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: LDX_Design_Upgrade_Plugin_Updater.php:228
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s."
+msgstr ""
+
+#: LDX_Design_Upgrade_Plugin_Updater.php:236
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
+"or %5$supdate now%6$s."
+msgstr ""
+
+#: LDX_Design_Upgrade_Plugin_Updater.php:474
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: LDX_Design_Upgrade_Plugin_Updater.php:474
+msgid "Error"
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:153
+msgid "License Key"
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:162 design-upgrade-pro-learndash.php:166
+msgid "Customize"
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:336 design-upgrade-pro-learndash.php:384
+#: design-upgrade-pro-learndash.php:446
+msgid "An error occurred, please try again."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:350
+#, php-format
+msgid "Your license key expired on %s."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:358
+msgid "Your license key has been disabled."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:363
+msgid "Invalid license."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:369
+msgid "Your license is not active for this site."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:374
+#, php-format
+msgid "This appears to be an invalid license key for %s."
+msgstr ""
+
+#: design-upgrade-pro-learndash.php:379
+msgid "Your license key has reached its activation limit."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:54
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:141
+msgid ""
+"These styles only apply to LearnDash elements. Use the window on the right "
+"to visit a page that contains LearnDash content."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:60
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:147
+msgid "General Design"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:74
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:201
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1190
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2347
+msgid "Progress Bar"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:81
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:154
+msgid "Buttons"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:88
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:187
+msgid "Profile"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:95
+msgid " Pages"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:102
+msgid " Navigation Widget"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:112
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:225
+msgid " Grid"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:155
+msgid "These styles only affect LearnDash buttons (previous/next "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:155
+msgid ", mark complete, expand all, etc.)."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:162
+msgid " Content Lists"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:163
+msgid "Styles applied to the \""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:163
+msgid " Content\" table displayed at the bottom of a "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:163
+msgid " page."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:170
+msgid "Focus Mode"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:171
+msgid ""
+"These styles apply to all Focus Mode pages when Focus Mode is enabled in "
+"your LearnDash settings."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:179
+msgid " Navigation"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:180
+msgid "These styles apply to the Focus Mode sidebar AND the "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:180
+msgid " Navigation widget."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:208
+msgid "Alerts"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:215
+msgid "Tooltips"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:271
+msgid "Global Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:278
+msgid ""
+"Used on various LearnDash elements (containers, alerts, tooltips, menus, "
+"etc.). Value is in pixels (px)."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:291
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2019
+msgid "Link Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:304
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2031
+msgid "Link Hover Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:317
+msgid "Complete/Correct Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:318
+msgid ""
+"We recommend some variation of green. Used for completed icons, correct "
+"answers, positive results, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:331
+msgid "Incorrect Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:332
+msgid ""
+"We recommend some variation of red. Used for incorrect answers, negative "
+"results, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:359
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2444
+msgid "Button Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:366
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:597
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:756
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1210
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1230
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1544
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1750
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1783
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1988
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2120
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2151
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2366
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2385
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2451
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2810
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2829
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2860
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2891
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2953
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2973
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3044
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3075
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3190
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3347
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3365
+msgid "Value is in pixels (px)."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:379
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2463
+msgid "Primary Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:380
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2464
+msgid "Used for primary actions like <em>Take this "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:380
+msgid "</em>, <em>Mark Complete</em>, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:393
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2476
+msgid "Primary Button Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:406
+msgid "Hover: Primary Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:419
+msgid "Hover: Primary Button Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:432
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2488
+msgid "Standard Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:433
+msgid ""
+"Used for secondary actions like next/previous navigation, expand/collapse "
+"all, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:446
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2501
+msgid "Standard Button Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:459
+msgid "Hover: Standard Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:472
+msgid "Hover: Standard Button Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:499
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1051
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1449
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2275
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2545
+msgid "Disable Expand/Collapse"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:500
+msgid "Remove Expand/Collapse links & always display all content."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:514
+msgid " Content\" Header Style"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:519
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:564
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:628
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1163
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2321
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3093
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3170
+msgid "Default"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:520
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:565
+msgid "Boxed"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:521
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1349
+msgid "Hidden"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:533
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:667
+msgid " Content\" Header Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:546
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:681
+msgid " Content\" Header Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:559
+msgid "Container Style"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:577
+msgid "Container Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:590
+msgid "Container Border Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:610
+msgid "Container Border"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:623
+msgid " Style"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:629
+msgid "Table"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:641
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1066
+msgid "Section Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:654
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1079
+msgid "Section Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:668
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:682
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:696
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:723
+msgid "Also applies to "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:668
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:682
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:696
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:723
+msgid " & assignment lists."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:695
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:709
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1009
+msgid " Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:709
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:736
+msgid "Hover: "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:722
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:736
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1022
+msgid " Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:749
+msgid " Border Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:769
+msgid " Border"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:782
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2644
+msgid "Hide \""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:782
+msgid " Content\" Header"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:796
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1131
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2187
+msgid "Line Separators"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:809
+msgid "Indent "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:837
+msgid "Content Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:842
+msgid "Inherit LearnDash Setting"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:843
+msgid "Edge-to-Edge"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:855
+msgid "Content Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:868
+msgid "Hide Page Title"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:882
+msgid "Hide Breadcrumbs"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:896
+msgid "Hide ALL Bottom Buttons"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:910
+msgid "Hide \"Back to...\" Link"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:924
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1342
+msgid "Avatar Style"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:929
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1347
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2534
+msgid "Circle"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:930
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1348
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2532
+msgid "Square"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:942
+msgid "Hide Avatar"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:956
+msgid "Hide Name"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:970
+msgid "Top Menu: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:983
+msgid "Top Menu: Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:996
+msgid "Sidebar Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1009
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1022
+msgid "Sidebar: "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1052
+msgid "Always display all "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1052
+msgid " and "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1092
+msgid "Link Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1105
+msgid "Hover: Link Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1118
+msgid "Hover: Link Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1158
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2316
+msgid "Progress Bar Style"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1164
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2323
+msgid "Striped"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1177
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2335
+msgid "Progress Bar Container"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1203
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2144
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2359
+msgid "Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1223
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2378
+msgid "Height"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1243
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2397
+msgid "Animate"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1245
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2399
+msgid "Add a smooth animation to the progress bar on each page load."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1258
+msgid "Hide \"% Complete\""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1272
+msgid "Hide \"X/Y Steps\""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1300
+msgid "Hide Section: User Info"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1314
+msgid "Hide Section: Statistics"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1328
+msgid "Hide Section: Your "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1361
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2586
+msgid "Hide \"Edit Profile\" Link"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1375
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2599
+msgid "Custom \"Edit Profile\" URL"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1380
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2604
+msgid ""
+"Send users to a custom page when clicking the \"Edit Profile\" link. Full "
+"URL is required, including https://."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1393
+msgid "Hide Statistic: "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1407
+msgid "Hide Statistic: Completed"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1421
+msgid "Hide Statistic: Certificates"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1435
+msgid "Hide Statistic: Points"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1450
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2276
+msgid ""
+"Remove the \"Expand All | Collapse All\" links &amp; always display all "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1450
+msgid " information."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1464
+msgid "Disable Search"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1478
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2616
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2671
+msgid "Hide "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1478
+msgid " Lists"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1479
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2617
+msgid "Remove all "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1479
+msgid " information inside the \"Your "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1479
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1494
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1509
+msgid "\" area."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1493
+msgid "Hide Essay Lists"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1494
+msgid "Remove all essay information inside the \"Your "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1508
+msgid "Hide Assignment Lists"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1509
+msgid "Remove all assignment information inside the \"Your "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1537
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2113
+msgid "Border Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1557
+msgid "Remove Alert Icons"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1558
+msgid "This will remove the icons for ALL alerts."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1572
+msgid "General Alert: Text/Icon/Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1585
+msgid "General Alert: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1598
+msgid "General Alert: Border"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1611
+msgid "Warning: Text/Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1624
+msgid "Warning: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1637
+msgid "Warning: Border/Icon"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1650
+msgid "Success: Text/Icon/Button"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1663
+msgid "Success: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1676
+msgid "Success: Border"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1703
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2101
+msgid "Background Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1716
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2199
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2730
+msgid "Text Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1743
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3037
+msgid "Grid Item: Border Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1763
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3056
+msgid "Grid Item: Border Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1776
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3068
+msgid "Grid Item: Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1796
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3087
+msgid "Grid Item: Shadow"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1801
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1833
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3092
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3152
+msgid "None"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1802
+msgid "Shadow"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1814
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3134
+msgid "Grid Item Hover: Add Shadow?"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1828
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3147
+msgid "Grid Item Hover: Transform"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1834
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3153
+msgid "Lift"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1835
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3154
+msgid "Enlarge"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1847
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3202
+msgid "Ribbon: Default: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1860
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3214
+msgid "Ribbon: Default: Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1873
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3226
+msgid "Ribbon: Enrolled: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1886
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3238
+msgid "Ribbon: Enrolled: Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1899
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3250
+msgid "Ribbon: Free: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1912
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3262
+msgid "Ribbon: Free: Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1925
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3274
+msgid "Ribbon: Custom: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1938
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3286
+msgid "Ribbon: Custom: Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1951
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3298
+msgid "Category Selector: Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1956
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3110
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3303
+msgid "Full"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1957
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3109
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3304
+msgid "Inline"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1969
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3328
+msgid "Category Selector: Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:1982
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3359
+msgid "Category Selector: Padding"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2043
+msgid "\"Correct\" Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2044
+msgid ""
+"We recommend some variation of green. Shown for correct answers, positive "
+"results, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2056
+msgid "\"Incorrect\" Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2057
+msgid ""
+"We recommend some variation of red. Shown for incorrect answers, negative "
+"results, etc."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2083
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2698
+msgid "Padding"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2088
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2703
+msgid "Small"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2089
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2704
+msgid "Medium"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2090
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2705
+msgid "Large"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2132
+msgid "Border Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2163
+msgid "Header Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2175
+msgid "Header Text"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2200
+msgid "If your background color is dark, change this to something light."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2212
+msgid "Text Hover Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2224
+msgid "Alternating Rows"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2225
+msgid "Highlight alternating rows in "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2237
+msgid "Row Hover Background"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2249
+msgid "Remove \""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2262
+msgid "Remove List Count"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2289
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2985
+msgid "Remove Status Checkmarks"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2322
+msgid "Flat"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2411
+msgid "Show Steps?"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2415
+msgid "Display \"X out of Y steps completed\""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2417
+msgid "Don't Show"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2418
+msgid "Below"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2419
+msgid "Above"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2489
+msgid "Used for secondary actions like next/previous navigation."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2527
+msgid "Avatar Shape"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2533
+msgid "Rounded"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2546
+msgid ""
+"Remove the \"Expand All | Collapse All\" links. Always display all "
+"registered "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2559
+msgid "Hide Profile Info"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2560
+msgid "Remove basic profile information &amp; just display \"Registered "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2573
+msgid "Hide \"Earned Course Points\""
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2630
+msgid "Hide \"Status\" Column &amp; Icons"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2631
+msgid "It will still show the progress bar &amp; \"XX% Complete\" text."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2716
+msgid "Always show "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2717
+msgid "Show all "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2742
+msgid "Hover: Text Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2754
+msgid "Hover: Background Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2766
+msgid "Current Item: Text Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2778
+msgid "Current Item: Background Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2790
+msgid "Bold All "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2803
+msgid " Top Spacing"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2822
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2946
+msgid " Indentation"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2841
+msgid " Text Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2853
+msgid " Bottom Border"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2872
+msgid " Border Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2884
+msgid " Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2903
+msgid " Background Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2915
+msgid " Line Separators"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2922
+msgid "Value is in pixels (px). Enter 0 to remove."
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2934
+msgid " Line Separator Color"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2966
+msgid " "
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:2998
+msgid "Hide \"Return to ["
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3011
+msgid "Move \"Return to ["
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3104
+msgid "Button: Width"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3121
+msgid "Transparent Progress Bar?"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3165
+msgid "Ribbon: Position"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3171
+msgid "Top Left"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3172
+msgid "Top Right"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3183
+msgid "Ribbon: Border Radius"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3315
+msgid "Category Selector: Hide Extra Label?"
+msgstr ""
+
+#: inc/customizer/class-design-upgrade-pro-learndash-customizer.php:3340
+msgid "Category Selector: Border Radius"
+msgstr ""

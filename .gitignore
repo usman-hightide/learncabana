@@ -1,0 +1,35 @@
+# LocalWP / machine-specific
+/conf/
+/logs/
+/app/.envrc
+/app/sql/
+*.code-workspace
+
+# WordPress secrets & local-only config
+/app/public/wp-config.php
+/app/public/wp-config-local.php
+/app/public/local-xdebuginfo.php
+
+# Runtime logs & caches
+*.log
+/app/public/wp-content/debug.log
+/app/public/wp-content/cache/
+/app/public/wp-content/upgrade/
+/app/public/wp-content/uploads/
+/app/public/wp-content/ai1wm-backups/
+/app/public/wp-content/updraft/
+/app/public/wp-content/wpvividbackups/
+/app/public/wp-content/wpvivid_uploads/
+/app/public/wp-content/languages/
+
+# Plugin install leftovers
+/app/public/wp-content/plugins/*.zip
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+node_modules/

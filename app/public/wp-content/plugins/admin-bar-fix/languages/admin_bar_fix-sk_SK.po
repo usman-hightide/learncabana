@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Better Admin Bar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-21 11:26+0000\n"
+"PO-Revision-Date: 2022-07-01 08:34+0000\n"
+"Last-Translator: admin <7kubiq7@gmail.com>\n"
+"Language-Team: Slovak\n"
+"Language: sk_SK\n"
+"Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : "
+"2;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.1; wp-5.3.2"
+
+#: admin-bar-fix.php:222
+msgid "* admin bar will be hidden on screens with width smaller than this"
+msgstr ""
+"* administračná lišta bude odstránená na obrazovkách so šírkou menšou ako "
+"toto číslo"
+
+#: admin-bar-fix.php:274
+msgid "* how fast the admin bar should expand on hover"
+msgstr "* rýchlosť animácie zobrazenia administračnej lišty"
+
+#: admin-bar-fix.php:292
+msgid "* how long to wait before admin bar collapse on mouse leave"
+msgstr ""
+"* dĺžka odozvy pred minimalizovaním administračnej lišty po opustení "
+"kurzorom myši"
+
+#: admin-bar-fix.php:283
+msgid "* how long to wait before admin bar expand on mouse enter"
+msgstr "* dĺžka odozvy pred maximalizovaním administračnej lišty"
+
+#: admin-bar-fix.php:255
+msgid "* opacity of inactive admin bar"
+msgstr "* nepriehľadnosť neaktívnej administračnej lišty"
+
+#: admin-bar-fix.php:264
+msgid "* visible width of inactive admin bar"
+msgstr "* viditeľná šírka neaktívnej administračnej lišty"
+
+#: admin-bar-fix.php:265
+msgid "** in ghost style it is height"
+msgstr "** pri štýle ghost to definuje výšku"
+
+#: admin-bar-fix.php:270
+msgid "Animation duration"
+msgstr "Trvanie animácie"
+
+#: admin-bar-fix.php:227
+msgid "Floating admin bar"
+msgstr "Plávajúca administračná lišta"
+
+#: admin-bar-fix.php:197
+#| msgid "Hide admin bar for these user roles"
+msgid "Hide frontend admin bar for these user roles"
+msgstr "Skryť administračnú lištu pre tieto skupiny používateľov"
+
+#: admin-bar-fix.php:208
+msgid "Hide items from admin bar"
+msgstr "Skryť položky administračnej lišty"
+
+#: admin-bar-fix.php:251
+msgid "Inactive opacity"
+msgstr "Neaktívna nepriehľadnosť"
+
+#: admin-bar-fix.php:260
+msgid "Inactive size"
+msgstr "Neaktívna veľkosť"
+
+#: admin-bar-fix.php:279
+msgid "Mouse enter delay"
+msgstr "Odozva pri maximalizácii"
+
+#: admin-bar-fix.php:288
+msgid "Mouse leave delay"
+msgstr "Odozva pri minimalizácii"
+
+#: admin-bar-fix.php:239
+msgid "Position"
+msgstr "Pozícia"
+
+#: admin-bar-fix.php:218
+#| msgid "Show admin bar only on screens bigger than"
+msgid "Show frontend admin bar only on screens bigger than"
+msgstr "Zobraziť administračnú lištu len pre obrazovky väčšie ako"

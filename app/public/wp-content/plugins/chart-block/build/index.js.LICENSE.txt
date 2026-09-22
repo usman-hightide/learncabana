@@ -1,0 +1,27 @@
+/*
+ * based on code from:
+ *
+ * @license RequireJS text 0.25.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
+ * Available via the MIT or new BSD license.
+ * see: http://github.com/jrburke/requirejs for details
+ */
+
+//!  ===== HEADER VALIDATION HERE =====
+
+//! === Color validation - Required field Start===
+
+//! === Name validation - Required field=== Start
+
+//! === SingleColor validation - Required field ===END
+
+//! === SingleColor validation - Required field ===START
+
+//! ==== Column count validation  ==== Start
+
+//! ===== HEADER VALIDATION END =====
+
+//!=== Numbers X/Y Skip if x or y are NaN (not valid numbers)===START
+
+//!=== size validation === START
+
+//!===Label validation === START

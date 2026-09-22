@@ -1,0 +1,801 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+ @import url('https://fonts.googleapis.com/css2?family=Rosario:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
+ 
+.aich-loading {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 3px solid rgba(0, 0, 0, .3);
+    border-right: 3px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+.open_ai_templates {
+    margin-right: 20px !important;
+}
+.components-modal__screen-overlay {
+    z-index: 9999999;
+}
+/*.components-popover {*/
+/*    z-index: 1 !important;*/
+/*}*/
+.components-modal__content p{
+    margin: 15px 0 !important;
+    margin-top: 0 !important;
+    font-size: 15px !important;
+}
+
+.aich_custom_dropdown {
+
+}
+.aich_custom_dropdown .category_name{
+
+}
+
+.aich_custom_dropdown .category_name .category_heading {
+    background: #F6F7F7;
+    border-bottom: 1px solid #DCDCDE;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.aich_custom_dropdown .category_heading svg {
+    width: 15px;
+    height: 15px;
+    transform: rotate(180deg);
+}
+
+
+.aich_custom_dropdown .category_heading.active svg {
+
+    transform: rotate(0deg);
+}
+.aich_custom_dropdown .category_name .category_heading strong {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #1E1E1E;
+}
+
+.row-actions a, .row-actions a:hover {
+    color: #135e96 !important;
+}
+.app_wrapper {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #F0F0F1;
+    z-index: 99999999;
+}
+
+.overly_screen {
+    background: rgba(30, 30, 30, 0.62);
+    overflow: hidden;
+    height: 100vh;
+    position: fixed !important;
+    top: calc( 0% + 80px );
+}
+.wp_ai_dropdown_lang{
+    position: absolute;
+    right: 0;
+    top: calc( 0% + 55px );
+    display: flex;
+    width: 203px;
+    flex-direction: column;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s ease-in-out;
+    z-index: 99;
+    box-shadow: 0px 2.3px 3.3px -0.5px rgba(0, 0, 0, 0.1), 0px 1.2px 1.7px -0.2px rgba(0, 0, 0, 0.1), 0px 0.7px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 3px 3px;
+}
+.wp_ai_dropdown_lang.active {
+    opacity: 1;
+    visibility: visible;
+}
+.sidebar_outer_wrapper {
+    background: #FFFFFF;
+    box-shadow: inset -1px 0px 0px #DDDDDD;
+}
+.disable_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: #ffffff96;
+}
+.wp_ai_dropdown_lang button {
+    padding: 6px 12px;
+    font-weight: 400 !important;
+    font-size: 13px;
+    line-height: 16px;
+    color: #0A4B78;
+    text-align: left;
+}
+
+.wp_ai_dropdown_lang > button:hover {
+    background: #DCDCDE !important;
+    color: #1E1E1E !important;
+}
+
+.templates_wrapper .block:hover h5 {
+    color: #2271B1;
+}
+
+.templates_wrapper .block:hover svg path {
+    fill: #2271B1;
+}
+div#root {
+    height: 100%;
+}
+
+
+.aich_custom_dropdown {
+
+}
+.aich_custom_dropdown .category_name{
+
+}
+
+.aich_custom_dropdown .category_name .category_heading {
+    background: #F6F7F7;
+    border-bottom: 1px solid #DCDCDE;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.aich_custom_dropdown .category_heading svg {
+    width: 15px;
+    height: 15px;
+    transform: rotate(180deg);
+}
+
+
+.aich_custom_dropdown .category_heading.active svg {
+
+    transform: rotate(0deg);
+}
+.aich_custom_dropdown .category_name .category_heading strong {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #1E1E1E;
+}
+
+.theme-browser .theme .theme-name {
+    height: auto !important;
+}
+
+.csf-repeater-alert.csf-repeater-max, .csf-repeater-alert.csf-repeater-min{
+    display: none !important;
+}
+@media only screen and (max-width: 1024px) {
+    .templates_outer_wrapper .templates_wrapper{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media only screen and (max-width: 768px) {
+    .templates_outer_wrapper .templates_wrapper{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.mce-wp-ai-co-pilot.mce-stack-layout-item.mce-disabled {
+    background: #F6F7F7 !important;
+    border-bottom: 1px solid #DCDCDE;
+    padding: 8px 12px !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item.mce-disabled:hover {
+    background: #F6F7F7 !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item.mce-disabled:before {
+    content: none !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item.mce-disabled .mce-text {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #1E1E1E !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item.mce-disabled .mce-ico {
+    display: none !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item {
+    border: none !important;
+    margin-bottom: 0 !important;
+    padding: 8px 12px !important;
+    background: transparent !important;
+}
+
+.mce-wp-ai-co-pilot.mce-stack-layout-item:hover {
+    background: #F0F6FC !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item .mce-text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height, or 133% */
+
+
+    /* WP Blue/Blue 70 */
+
+    color: #0A4B78 !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item:before {
+    content: "";
+    background: #0A4B78;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item:hover .mce-text {
+    color: #1E1E1E !important;
+}
+.mce-wp-ai-co-pilot.mce-stack-layout-item:hover:before {
+    background: #1E1E1E !important;
+}
+.mce-wp-ai-co-pilot i {
+    display: none !important;
+}
+
+/* Style settings panel */
+
+.aich_prompt_repeater .csf-field.csf-field-heading {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.group_label {
+    display: none;
+}
+
+.aich_custom_dropdown {
+    width: 250px;
+}
+.wp_ai_prompts_list{
+    display: none;
+}
+
+.category_name.block .wp_ai_prompts_list{
+    display: block;
+}
+
+.aich_custom_dropdown .category_name .single_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.aich_custom_dropdown .category_name .single_item span {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.aich_custom_dropdown .single_item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #0A4B78;
+    position: relative;
+}
+
+.aich_custom_dropdown .category_name .single_item:before {
+    content: "";
+    background: #0A4B78;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+}
+
+.aich_custom_dropdown .single_item:hover {
+    background: #F0F6FC;
+    color: #1E1E1E;
+}
+
+.aich_custom_dropdown .single_item:hover:before {
+    background: #1E1E1E;
+}
+
+#aich-loading-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #00000017;
+    z-index: 999999999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mce-wp-ai-co-pilot {
+    background: #000 !important;
+}
+.ui-accordion-header .csf-cloneable-value{
+    font-size: 16px !important;
+    margin-left: 5px !important;
+    font-weight: 600;
+}
+
+.swal2-container {
+    z-index: 9999999999 !important;
+}
+.swal2-container.swal2-center>.swal2-popup {
+    padding: 30px !important;
+}
+
+.swal2-container .swal2-title {
+    display: block;
+    text-align: left;
+    padding: 0;
+    font-size: 20px;
+    line-height: 28px;
+    color: #1E1E1E;
+}
+
+.swal2-container .swal2-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 30px;
+}
+.swal2-container .swal2-actions button {
+    border-radius: 2px;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+.swal2-container .swal2-actions button.swal2-confirm{
+    background: #2271B1;
+    min-height: 40px;
+}
+.swal2-container .swal2-actions button.swal2-confirm{
+    order: 2;
+}
+
+.swal2-container .swal2-actions button.swal2-deny{
+    background: #E65054;
+    order: 1;
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+    background-image: none !important;
+}
+.swal2-html-container {
+    display: block !important;
+    text-align: left !important;
+    /*margin-left: 25px !i;*/
+    font-size: 14px !important;
+    color: #1E1E1E !important;
+    margin-top: 30px !important;
+    line-height: 20px;
+    margin-left: 0 !important;
+}
+.swal2-container .swal2-actions button {
+    min-height: 40px;
+}
+.swal2-container .swal2-actions button:focus {
+    outline: none;
+}
+.swal2-container .swal2-actions button.swal2-cancel {
+    display: inline-block;
+    min-height: 40px;
+    order: 0;
+    background: transparent;
+    color: #2271b1;
+}
+
+
+
+
+/**
+ * Free vs pro css
+ */
+
+h1, h2, h3, h4, h5, h6 p {
+    margin: 0;
+    padding: 0;
+}
+.wp_ai_co_pilot_main_wrapper {
+    margin: 50px 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_header_wrapper .container {
+    text-align: center;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_header_wrapper .container .title h1 {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 65px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #09213D;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_header_wrapper .container .text p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 36px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    margin: 22px 0 24px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_header_wrapper .container .header_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_header_wrapper .container .header_btn .left_btn {
+    font-family: "Rosario", Sans-serif;
+    margin-right: 5px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_money_back_guarantee_wrapper .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #FFFFFF;
+    border: 1px solid #EFF0F6;
+    box-shadow: 0px 35px 70px rgba(20, 20, 43, 0.03);
+    border-radius: 5px;
+    padding: 25px 0;
+    margin-top: 100px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_money_back_guarantee_wrapper .container .money_back_guarantee_text h3 {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 44px;
+    color: #09213D;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_money_back_guarantee_wrapper .container .money_back_guarantee_text p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    margin-top: 10px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_money_back_guarantee_wrapper .container .money_back_guarantee_btn{
+    font-family: "Rosario", Sans-serif;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper {
+    margin-top: 100px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container {
+    width: 70%;
+    margin: 0 auto;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_header {
+    text-align: center;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_header span {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #2271b1;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_header h2 {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 70px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #09213D;
+    margin: 12px 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_header p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    margin: 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table {
+    margin-top: 50px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table th, .wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table td {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table th {
+    background-color: #eee;
+    font-weight: bold;
+    font-size: 18px;
+    color: #09213D;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table td:first-child {
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .tick, .wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .cross {
+    font-weight: bold;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .cross {
+    color: red;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .tick {
+    color: green;
+    font-size: 18px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .row-cross .cross {
+    display: block;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .row-cross .tick {
+    display: none;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .row-cross .tick::before {
+    content: "\2714";
+    color: green;
+    font-weight: bold;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .row-tick .cross {
+    display: none;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_pricing_wrapper .container .wp_ai_co_pilot_pricing_content .wp_ai_co_pilot_pricing_content_table .pricing-table .row-tick .tick::before {
+    content: "\2714";
+    color: green;
+    font-weight: bold;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper {
+    margin: 100px 0 100px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .wp_ai_co_pilot_testimonial_content_header {
+    text-align: center;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .wp_ai_co_pilot_testimonial_content_header span {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #2271b1;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .wp_ai_co_pilot_testimonial_content_header h2 {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 70px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #09213D;
+    margin: 12px 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .wp_ai_co_pilot_testimonial_content_header p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    margin: 0;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards {
+    display: flex;
+    justify-content: space-between;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card {
+    width: 30%;
+    padding: 30px;
+    background: #FFFFFF;
+    border: 1px solid #EFF0F6;
+    box-shadow: 0px 35px 70px rgba(20, 20, 43, 0.03);
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 50px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .logo {
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .logo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .content p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    border-bottom: 1px solid rgba(227, 229, 236, 0.5);
+    padding: 20px 0 30px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .details .name {
+    text-align: left;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .details .name p {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 21px;
+    color: #09213D;
+    margin-bottom: 10px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .details .name span {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_testimonial_wrapper .container .wp_ai_co_pilot_testimonial_content .testimonial-cards .card .details .rating .fas.fa-star {
+    color: gold;
+}
+
+/* 0-600px: Phone 600-991px: Tablet Portrait 992-1200px: Tablet Landscape [1200-1800px:] is where our normal styles apply 1800px + : Big Desktop $breakpoint argument choices: - phone - tab-port - tab-land - big-desktop 1em = 16px */
+.bd_wp_ai_co_pilot_setting_button {
+    color: #2271b1;
+    text-shadow: 1px 1px 1px #eee;
+    font-weight: normal;
+}
+.bd_wp_ai_co_pilot_pro_button {
+    color: #93003c;
+    text-shadow: 1px 1px 1px #eee;
+    font-weight: 700;
+}
+.Premium_feature_message {
+    font-size: 17px;
+    margin-top: 15px;
+}
+.Premium_feature_video {
+    margin: 30px 0;
+    padding: 30px;
+    max-width: 830px;
+    background: #fff;
+    box-shadow: 0px 35px 70px -10px rgba(20, 20, 43, 0.2);
+    border-radius: 15px;
+    text-align: center;
+    overflow: hidden;
+    pointer-events: none;
+}
+.Premium_feature_video iframe {
+    border-radius: 15px;
+}
+.contents_message {
+    margin-top: 30px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_template_mode_wrapper .container {
+
+    background: #FFFFFF;
+    border: 1px solid #EFF0F6;
+    box-shadow: 0px 35px 70px rgba(20, 20, 43, 0.03);
+    border-radius: 5px;
+    padding: 55px 0 25px;
+    margin-top: 100px;
+    text-align: center;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_template_mode_wrapper .container .template_mode_text {
+    margin-bottom: 30px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_template_mode_wrapper .container .template_mode_text h3 {
+    font-family: "Rosario", Sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 44px;
+    color: #09213D;
+    margin-bottom: 16px;
+}
+.wp_ai_co_pilot_main_wrapper .wp_ai_co_pilot_template_mode_wrapper .container .template_mode_text p {
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+    color: #727F9F;
+    margin-top: 10px;
+}
+.csf-before-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.wpaicp_search_prompt input {
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+    margin-top: 0;
+    border-radius: 0;
+    border-top: none;
+    border: none;
+    margin-bottom: 0;
+}
+.wpaicp_search_prompt input:focus {
+    border-color: transparent;
+    box-shadow: none;
+    outline: none;
+}
+/*# sourceMappingURL=boomdevs-toc-admin.css.map */

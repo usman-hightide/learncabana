@@ -1,0 +1,241 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wpcomplete\n"
+"POT-Creation-Date: 2017-01-10 12:44-0600\n"
+"PO-Revision-Date: 2017-01-10 12:44-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-wpcomplete-admin.php:115
+msgid "Can Complete"
+msgstr "Completada"
+
+#: admin/class-wpcomplete-admin.php:119
+msgid "Assign to: No specific course"
+msgstr "Asignar a: Ningún curso específico"
+
+#: admin/class-wpcomplete-admin.php:139
+msgid "WPComplete Settings"
+msgstr "Ajustes WPComplete"
+
+#: admin/class-wpcomplete-admin.php:140 admin/class-wpcomplete-admin.php:744
+msgid "WPComplete"
+msgstr "WPComplete"
+
+#: admin/class-wpcomplete-admin.php:165 admin/class-wpcomplete-admin.php:166
+msgid "Post Completion"
+msgstr "Página Finalización"
+
+#: admin/class-wpcomplete-admin.php:182 admin/class-wpcomplete-admin.php:185
+#: admin/class-wpcomplete-admin.php:273 admin/class-wpcomplete-admin.php:276
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Usted no tiene suficientes permisos para acceder a esta página."
+
+#: admin/class-wpcomplete-admin.php:188 admin/class-wpcomplete-admin.php:279
+msgid "You only get access to this data once you activate your license."
+msgstr ""
+"Sólo se tiene acceso a estos datos una vez que haya activado su licencia."
+
+#: admin/class-wpcomplete-admin.php:258 admin/class-wpcomplete-admin.php:259
+#: admin/class-wpcomplete-admin.php:1038
+msgid "User Completion"
+msgstr "Finalización del usuario"
+
+#: admin/class-wpcomplete-admin.php:319
+msgid "General Settings"
+msgstr "Configuración general"
+
+#: admin/class-wpcomplete-admin.php:326
+msgid "Student Role Type"
+msgstr "Estudiante tipo de rol"
+
+#: admin/class-wpcomplete-admin.php:337
+msgid "Lesson Content Type"
+msgstr "Lección de tipo de contenido"
+
+#: admin/class-wpcomplete-admin.php:359
+msgid "Mark Complete Button"
+msgstr "Botón del signo completa"
+
+#: admin/class-wpcomplete-admin.php:366 admin/class-wpcomplete-admin.php:417
+msgid "Button Text"
+msgstr "Texto del botón"
+
+#: admin/class-wpcomplete-admin.php:376 admin/class-wpcomplete-admin.php:427
+msgid "Saving Text"
+msgstr "Guardar texto"
+
+#: admin/class-wpcomplete-admin.php:387 admin/class-wpcomplete-admin.php:438
+msgid "Button Color"
+msgstr "Color del botón"
+
+#: admin/class-wpcomplete-admin.php:398 admin/class-wpcomplete-admin.php:449
+msgid "Button Text Color"
+msgstr "Color del texto del botón"
+
+#: admin/class-wpcomplete-admin.php:410
+msgid "Completed Button"
+msgstr "Botón completado"
+
+#: admin/class-wpcomplete-admin.php:461
+msgid "Graph Settings"
+msgstr "Configuración del gráfico"
+
+#: admin/class-wpcomplete-admin.php:468
+msgid "Primary Color"
+msgstr "Color primario"
+
+#: admin/class-wpcomplete-admin.php:479
+msgid "Secondary Color"
+msgstr "Color secundario"
+
+#: admin/class-wpcomplete-admin.php:491
+msgid "Advanced Settings"
+msgstr "Ajustes avanzados"
+
+#: admin/class-wpcomplete-admin.php:498
+msgid "Custom Styles (CSS)"
+msgstr "Estilos personalizados (CSS)"
+
+#: admin/class-wpcomplete-admin.php:809 admin/class-wpcomplete-admin.php:837
+msgid "An error occurred, please try again."
+msgstr "Ha ocurrido un error interno. Inténtelo de nuevo."
+
+#: admin/class-wpcomplete-admin.php:816
+#, php-format
+msgid "Your license key expired on %s."
+msgstr "La clave de licencia expiró el %s."
+
+#: admin/class-wpcomplete-admin.php:821
+msgid "Your license key has been disabled."
+msgstr "La clave de licencia se ha desactivado."
+
+#: admin/class-wpcomplete-admin.php:824
+msgid "Invalid license."
+msgstr "Licencia invalida."
+
+#: admin/class-wpcomplete-admin.php:828
+msgid "Your license is not active for this URL."
+msgstr "Su licencia no es activo para esta URL."
+
+#: admin/class-wpcomplete-admin.php:831
+#, php-format
+msgid "This appears to be an invalid license key for %s."
+msgstr "Esto parece ser una clave de licencia válida para %s."
+
+#: admin/class-wpcomplete-admin.php:834
+msgid "Your license key has reached its activation limit."
+msgstr "Su clave de licencia ha llegado a su límite de activación."
+
+#: admin/class-wpcomplete-admin.php:1016
+msgid "Please activate your license key to enable all WPComplete PRO features."
+msgstr ""
+"Por favor, activar su clave de licencia para activar todas las funciones "
+"WPComplete PRO."
+
+#: admin/class-wpcomplete-admin.php:1035
+msgid "Course Name"
+msgstr "Nombre del curso"
+
+#: admin/class-wpcomplete-admin.php:1177
+msgid "Lesson Completion"
+msgstr "Finalización de la lección"
+
+#: admin/partials/wpcomplete-admin-license-notice.php:8
+msgid "Complete the setup now."
+msgstr "Complete la configuración del mismo."
+
+#: admin/partials/wpcomplete-admin-metabox.php:4
+#: admin/partials/wpcomplete-admin-quickedit.php:10
+msgid "Enable Complete button"
+msgstr "Habilitar el botón Completar"
+
+#: admin/partials/wpcomplete-admin-metabox.php:12
+msgid ""
+"Activate your plugin to enable support and to unlock all available features."
+msgstr ""
+"Active su plugin para habilitar el soporte y para desbloquear todas las "
+"características disponibles."
+
+#: admin/partials/wpcomplete-admin-metabox.php:19
+msgid "This is a part of:"
+msgstr "Esta es una parte de:"
+
+#: admin/partials/wpcomplete-admin-metabox.php:21
+msgid "No specific course"
+msgstr "Sin curso específico"
+
+#: admin/partials/wpcomplete-admin-metabox.php:25
+msgid "Add a specific course"
+msgstr "Añadir un curso específico"
+
+#: admin/partials/wpcomplete-admin-metabox.php:33
+msgid ""
+"Where would you like to redirect your students upon marking this as "
+"completed?"
+msgstr ""
+"¿Dónde le gustaría volver a dirigir a sus estudiantes a marcar esto como "
+"completado?"
+
+#: admin/partials/wpcomplete-admin-metabox.php:36
+msgid "Leave empty to not redirect."
+msgstr "Dejar en blanco para no redirige."
+
+#: admin/partials/wpcomplete-admin-settings-auto-append.php:12
+msgid "Automatically add complete button to enabled posts &amp; pages for me."
+msgstr ""
+"Añadir automáticamente botón completa a los mensajes y hojas para mí "
+"habilitados."
+
+#: admin/partials/wpcomplete-admin-settings-input.php:2
+msgid "Saving..."
+msgstr "Ahorro…"
+
+#: admin/partials/wpcomplete-admin-settings-license-status.php:20
+msgid "Activate License"
+msgstr "Activar licencia"
+
+#: includes/github-checker.php:119
+msgid "There is no changelog available."
+msgstr "No hay cambios disponibles."
+
+#: includes/plugin-update-checker-3.1.php:763
+msgid "Check for updates"
+msgstr "Comprobar si hay actualizaciones"
+
+#: includes/plugin-update-checker-3.1.php:807
+msgid "This plugin is up to date."
+msgstr "Este plugin es hasta la fecha."
+
+#: includes/plugin-update-checker-3.1.php:809
+msgid "A new version of this plugin is available."
+msgstr "Una nueva versión de este plugin está disponible."
+
+#: includes/plugin-update-checker-3.1.php:811
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Desconocido actualización de estado corrector \"%s\""
+
+#~ msgid "Activate your plugin"
+#~ msgstr "Activar el plugin"
+
+#~ msgid "to enable support and to unlock all available features."
+#~ msgstr ""
+#~ "para habilitar el soporte y para desbloquear todas las características "
+#~ "disponibles."
+
+#~ msgid "Where would you like to redirect your students upon marking this "
+#~ msgstr "¿Dónde le gustaría volver a dirigir a sus estudiantes a marcar este"
+
+#~ msgid "Custom Styles"
+#~ msgstr "Estilos personalizados (CSS)"

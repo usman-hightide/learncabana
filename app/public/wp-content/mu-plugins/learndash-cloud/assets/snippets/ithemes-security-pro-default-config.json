@@ -1,0 +1,754 @@
+
+{
+    "id": "ef074191-9ef8-4673-81d5-3d47ad86533d",
+    "metadata": {
+        "title": "default-ithemes-learndash-settings",
+        "build": 4124,
+        "version": "7.1.1",
+        "exported_at": "2022-04-19T17:03:01+00:00",
+        "exported_by": [],
+        "home_url": "https://7e7d2f66e0.400.lwdns.dev",
+        "abspath": "/chroot/home/a4158391/7e7d2f66e0.400.lwdns.dev/html/"
+    },
+    "sources": {
+        "modules": {
+            "ban-users": "active",
+            "file-change": "inactive",
+            "brute-force": "active",
+            "network-brute-force": "inactive",
+            "ssl": "inactive",
+            "backup": "inactive",
+            "two-factor": "inactive",
+            "malware-scheduling": "active",
+            "pro-two-factor": "inactive",
+            "magic-links": "active",
+            "passwordless-login": "inactive",
+            "privilege": "inactive",
+            "recaptcha": "inactive",
+            "user-logging": "active",
+            "version-management": "active",
+            "fingerprinting": "inactive",
+            "geolocation": "inactive"
+        },
+        "user-groups": [
+            {
+                "id": "2496e1e1-3750-4eb2-a31b-d572ac2118e1",
+                "label": "Editors",
+                "users": [],
+                "roles": [],
+                "canonical": [
+                    "editor"
+                ],
+                "min_role": ""
+            },
+            {
+                "id": "27c96630-d1ff-4e67-a01b-4b2bd6e97ef6",
+                "label": "Administrators",
+                "users": [],
+                "roles": [],
+                "canonical": [
+                    "administrator"
+                ],
+                "min_role": ""
+            },
+            {
+                "id": "420cf666-21b6-4c13-9478-3e5e53189741",
+                "label": "Contributors",
+                "users": [],
+                "roles": [],
+                "canonical": [
+                    "contributor"
+                ],
+                "min_role": ""
+            },
+            {
+                "id": "4cd4d1bc-436f-4752-96ad-4f57c4b5f4ce",
+                "label": "Authors",
+                "users": [],
+                "roles": [],
+                "canonical": [
+                    "author"
+                ],
+                "min_role": ""
+            },
+            {
+                "id": "e31020be-5539-41c5-8d4d-4ed20f1b8b80",
+                "label": "Members",
+                "users": [],
+                "roles": [
+                    {
+                        "slug": "group_leader",
+                        "label": "Group Leader"
+                    },
+                    {
+                        "slug": "subscriber",
+                        "label": "Subscriber"
+                    }
+                ],
+                "canonical": [],
+                "min_role": ""
+            }
+        ],
+        "dashboard": [
+            {
+                "id": 5,
+                "created_by": {
+                    "id": 1,
+                    "email": "nwblackhole@mylearndash.com",
+                    "name": "a18ebc86_admin"
+                },
+                "created_at": "2022-04-19T16:30:49+00:00",
+                "label": "Security Dashboard",
+                "cards": [
+                    {
+                        "id": 22,
+                        "type": "banned-users",
+                        "size": {
+                            "huge": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 1,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 4,
+                                "y": 0
+                            },
+                            "wide": {
+                                "x": 5,
+                                "y": 0
+                            },
+                            "large": {
+                                "x": 3,
+                                "y": 0
+                            },
+                            "medium": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 4
+                            }
+                        },
+                        "settings": ""
+                    },
+                    {
+                        "id": 16,
+                        "type": "active-lockouts",
+                        "size": {
+                            "huge": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 1,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 3,
+                                "y": 4
+                            },
+                            "wide": {
+                                "x": 0,
+                                "y": 2
+                            },
+                            "large": {
+                                "x": 1,
+                                "y": 0
+                            },
+                            "medium": {
+                                "x": 0,
+                                "y": 8
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 0
+                            }
+                        },
+                        "settings": ""
+                    },
+                    {
+                        "id": 9,
+                        "type": "brute-force",
+                        "size": {
+                            "huge": {
+                                "w": 3,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 2,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 0,
+                                "y": 4
+                            },
+                            "wide": {
+                                "x": 3,
+                                "y": 2
+                            },
+                            "large": {
+                                "x": 2,
+                                "y": 2
+                            },
+                            "medium": {
+                                "x": 0,
+                                "y": 6
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 10
+                            }
+                        },
+                        "settings": []
+                    },
+                    {
+                        "id": 11,
+                        "type": "lockout",
+                        "size": {
+                            "huge": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 1,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 2,
+                                "y": 2
+                            },
+                            "wide": {
+                                "x": 4,
+                                "y": 0
+                            },
+                            "large": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "medium": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 2
+                            }
+                        },
+                        "settings": []
+                    },
+                    {
+                        "id": 12,
+                        "type": "version-management",
+                        "size": {
+                            "huge": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 1,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 2,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "wide": {
+                                "x": 2,
+                                "y": 0
+                            },
+                            "large": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "medium": {
+                                "x": 0,
+                                "y": 4
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 8
+                            }
+                        },
+                        "settings": []
+                    },
+                    {
+                        "id": 13,
+                        "type": "malware-scan",
+                        "size": {
+                            "huge": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "wide": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "large": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "medium": {
+                                "w": 2,
+                                "h": 2
+                            },
+                            "mobile": {
+                                "w": 2,
+                                "h": 2
+                            }
+                        },
+                        "position": {
+                            "huge": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "wide": {
+                                "x": 0,
+                                "y": 0
+                            },
+                            "large": {
+                                "x": 0,
+                                "y": 2
+                            },
+                            "medium": {
+                                "x": 0,
+                                "y": 2
+                            },
+                            "mobile": {
+                                "x": 0,
+                                "y": 6
+                            }
+                        },
+                        "settings": []
+                    }
+                ],
+                "shares": {
+                    "users": [],
+                    "roles": []
+                }
+            }
+        ],
+        "settings": {
+            "feature-flags": {
+                "enabled": [],
+                "rates": [],
+                "opt_outs": []
+            },
+            "user-groups": {
+                "default_groups": []
+            },
+            "global": {
+                "write_files": true,
+                "nginx_file": "/chroot/home/a4158391/7e7d2f66e0.400.lwdns.dev/html/nginx.conf",
+                "lockout_period": 15,
+                "blacklist_period": 7,
+                "blacklist": true,
+                "blacklist_count": 3,
+                "lockout_message": "error",
+                "user_lockout_message": "You have been locked out due to too many invalid login attempts.",
+                "community_lockout_message": "Your IP address has been flagged as a threat by the iThemes Security network.",
+                "automatic_temp_auth": true,
+                "lockout_white_list": [],
+                "log_type": "database",
+                "log_rotation": 60,
+                "file_log_rotation": 180,
+                "log_location": "/chroot/home/a4158391/7e7d2f66e0.400.lwdns.dev/html/wp-content/uploads/ithemes-security/logs",
+                "proxy": "automatic",
+                "proxy_header": "HTTP_X_FORWARDED_FOR",
+                "allow_tracking": false,
+                "hide_admin_bar": false,
+                "show_error_codes": false,
+                "enable_grade_report": false,
+                "build": 4124,
+                "initial_build": 4124,
+                "activation_timestamp": 1649950623,
+                "cron_status": -1,
+                "licensed_hostname_prompt": false,
+                "onboard_complete": true,
+                "enabled_tools": [],
+                "enable_remote_help": true,
+                "feature_flags": [],
+                "manage_group": [
+                    "27c96630-d1ff-4e67-a01b-4b2bd6e97ef6"
+                ]
+            },
+            "notification-center": {
+                "from_email": "",
+                "default_recipients": {
+                    "user_list": []
+                },
+                "notifications": {
+                    "digest": {
+                        "schedule": "weekly",
+                        "enabled": true,
+                        "user_list": [],
+                        "recipient_type": "default",
+                        "subject": "Weekly Security Digest"
+                    },
+                    "lockout": {
+                        "enabled": false,
+                        "user_list": [],
+                        "recipient_type": "default",
+                        "subject": null
+                    },
+                    "backup": {
+                        "email_list": [],
+                        "subject": null
+                    },
+                    "magic-link-login-page": {
+                        "subject": null,
+                        "message": ""
+                    },
+                    "malware-scheduling": {
+                        "enabled": true,
+                        "user_list": [],
+                        "recipient_type": "default"
+                    },
+                    "automatic-updates-debug": {
+                        "enabled": false,
+                        "user_list": [],
+                        "recipient_type": "default"
+                    },
+                    "import-export": {
+                        "subject": null,
+                        "message": ""
+                    },
+                    "two-factor-reminder": {
+                        "subject": null,
+                        "message": ""
+                    },
+                    "inactive-users": {
+                        "schedule": "monthly",
+                        "enabled": true,
+                        "user_list": [],
+                        "recipient_type": "default",
+                        "subject": null
+                    },
+                    "grade-report-change": {
+                        "schedule": "daily",
+                        "subject": null,
+                        "enabled": false,
+                        "user_list": [],
+                        "recipient_type": "default"
+                    }
+                },
+                "admin_emails": []
+            },
+            "dashboard": {
+                "migrated": false,
+                "group": [
+                    "27c96630-d1ff-4e67-a01b-4b2bd6e97ef6"
+                ]
+            },
+            "ban-users": {
+                "default": false,
+                "enable_ban_lists": true,
+                "server_config_limit": 100,
+                "agent_list": []
+            },
+            "file-change": {
+                "file_list": [],
+                "types": [
+                    ".log",
+                    ".mo",
+                    ".po",
+                    ".bmp",
+                    ".gif",
+                    ".ico",
+                    ".jpe",
+                    ".jpeg",
+                    ".jpg",
+                    ".png",
+                    ".psd",
+                    ".raw",
+                    ".svg",
+                    ".tif",
+                    ".tiff",
+                    ".aif",
+                    ".flac",
+                    ".m4a",
+                    ".mp3",
+                    ".oga",
+                    ".ogg",
+                    ".ogg",
+                    ".ra",
+                    ".wav",
+                    ".wma",
+                    ".asf",
+                    ".avi",
+                    ".mkv",
+                    ".mov",
+                    ".mp4",
+                    ".mpe",
+                    ".mpeg",
+                    ".mpg",
+                    ".ogv",
+                    ".qt",
+                    ".rm",
+                    ".vob",
+                    ".webm",
+                    ".wm",
+                    ".wmv"
+                ],
+                "compare_file_hashes": true
+            },
+            "brute-force": {
+                "auto_ban_admin": false,
+                "max_attempts_host": 5,
+                "max_attempts_user": 10,
+                "check_period": 5
+            },
+            "network-brute-force": {
+                "enable_ban": true,
+                "api_key": "",
+                "api_secret": "",
+                "email": null,
+                "updates_optin": false
+            },
+            "password-requirements": {
+                "enabled_requirements": {
+                    "strength": false,
+                    "hibp": false,
+                    "age": false,
+                    "force": false
+                },
+                "requirement_settings": {
+                    "strength": {
+                        "group": [
+                            "27c96630-d1ff-4e67-a01b-4b2bd6e97ef6",
+                            "e31020be-5539-41c5-8d4d-4ed20f1b8b80",
+                            "2496e1e1-3750-4eb2-a31b-d572ac2118e1",
+                            "4cd4d1bc-436f-4752-96ad-4f57c4b5f4ce",
+                            "420cf666-21b6-4c13-9478-3e5e53189741",
+                            "everybody-else"
+                        ]
+                    },
+                    "hibp": {
+                        "group": []
+                    },
+                    "age": {
+                        "expire_max": 120,
+                        "group": []
+                    }
+                }
+            },
+            "ssl": {
+                "require_ssl": "disabled",
+                "frontend": 0,
+                "admin": false
+            },
+            "backup": {
+                "enabled": false,
+                "interval": 3,
+                "method": "email",
+                "location": "/chroot/home/a4158391/7e7d2f66e0.400.lwdns.dev/html/wp-content/uploads/ithemes-security/backups",
+                "retain": 0,
+                "zip": true,
+                "exclude": [
+                    "itsec_logs",
+                    "itsec_temp",
+                    "itsec_lockouts",
+                    "itsec_distributed_storage",
+                    "itsec_opaque_tokens",
+                    "itsec_geolocation_cache"
+                ]
+            },
+            "two-factor": {
+                "available_methods": "all",
+                "custom_available_methods": [
+                    "Two_Factor_Totp",
+                    "Two_Factor_Email",
+                    "Two_Factor_Backup_Codes"
+                ],
+                "disable_first_login": false,
+                "on_board_welcome": "When you login using Two-factor authenticator you’ll be prompted to enter a secondary Authentication Code from your Phone or Email.\n\nTwo-Factor authentication adds an important extra layer of protection to your login by combining something you know, your password, with something you have, your Phone or Email, preventing attackers from gaining access to your account even if you lose control of your password.",
+                "exclude_group": [],
+                "application_passwords_group": [],
+                "protect_vulnerable_users": false,
+                "protect_vulnerable_site": false,
+                "protect_user_group": [],
+                "remember_group": []
+            },
+            "system-tweaks": {
+                "protect_files": true,
+                "directory_browsing": true,
+                "uploads_php": true,
+                "plugins_php": true,
+                "themes_php": true
+            },
+            "wordpress-salts": {
+                "last_generated": 0
+            },
+            "wordpress-tweaks": {
+                "file_editor": true,
+                "disable_xmlrpc": "enable",
+                "allow_xmlrpc_multiauth": false,
+                "rest_api": "default-access",
+                "valid_user_login_type": "both",
+                "force_unique_nicename": false,
+                "disable_unused_author_pages": false
+            },
+            "security-check-pro": {
+                "last_scan_timestamp": null,
+                "remote_ip_index": null,
+                "ssl_supported": null,
+                "remote_ips_timestamp": null,
+                "remote_ips": [],
+                "key_salt": ""
+            },
+            "site-scanner": {
+                "vulnerabilities": [],
+                "muted_issues": [],
+                "registered_sites": []
+            },
+            "hide-backend": {
+                "enabled": false,
+                "slug": "wplogin",
+                "register": "wp-signup.php",
+                "theme_compat": true,
+                "theme_compat_slug": "not_found",
+                "post_logout_slug": ""
+            },
+            "pro-two-factor": {
+                "protect_vulnerable_users": false,
+                "protect_vulnerable_site": false,
+                "protect_user_group": [],
+                "remember_group": []
+            },
+            "dashboard-widget": [],
+            "online-files": [],
+            "passwordless-login": {
+                "availability": "enabled",
+                "flow": "method-first",
+                "integrations": [],
+                "group": [],
+                "2fa_bypass_group": []
+            },
+            "password-expiration": {
+                "expire_force": 0
+            },
+            "recaptcha": {
+                "type": "v3",
+                "site_key": "",
+                "secret_key": "",
+                "login": false,
+                "register": false,
+                "reset_pass": false,
+                "comments": false,
+                "v3_include_location": "required",
+                "language": "",
+                "theme": false,
+                "invis_position": "bottomright",
+                "gdpr": true,
+                "on_page_opt_in": true,
+                "v3_threshold": 0.5,
+                "error_threshold": 7,
+                "check_period": 5,
+                "validated": false,
+                "last_error": ""
+            },
+            "user-logging": {
+                "group": [
+                    "27c96630-d1ff-4e67-a01b-4b2bd6e97ef6"
+                ]
+            },
+            "version-management": {
+                "wordpress_automatic_updates": true,
+                "plugin_automatic_updates": "all",
+                "theme_automatic_updates": "all",
+                "packages": [],
+                "scan_for_old_wordpress_sites": false,
+                "update_if_vulnerable": true
+            },
+            "fingerprinting": {
+                "restrict_capabilities": false,
+                "session_hijacking_protection": false,
+                "group": []
+            },
+            "geolocation": {
+                "maxmind_lite": {
+                    "key": ""
+                },
+                "maxmind_api": {
+                    "user": "",
+                    "key": ""
+                },
+                "mapbox_access_token": "",
+                "mapquest_api_key": ""
+            }
+        }
+    }
+}

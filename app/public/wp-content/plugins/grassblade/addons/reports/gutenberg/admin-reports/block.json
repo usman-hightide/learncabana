@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "grassblade/admin-reports",
+    "version": "1.0",
+    "title": "Admin Reports",
+    "category": "grassblade-blocks",
+    "icon": "id-alt",
+    "description": "Show frontend reports to admins and group leaders.",
+    "supports": {
+        "html": false
+    },
+    "textdomain": "grassblade",
+    "editorScript": "file:./block.js"
+}

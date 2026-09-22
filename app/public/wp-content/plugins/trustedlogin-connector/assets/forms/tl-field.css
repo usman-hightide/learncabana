@@ -1,0 +1,738 @@
+.tl-grant-access {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tl-header {
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    padding: 16px 24px;
+}
+
+.tl-footer {
+    border-top: 1px solid #DDDDDD;
+    display: none;
+    align-items: center;
+    column-gap: 4px;
+    padding: 16px 24px 4px;
+    /* Pin font-size so the "Site Access Key:" label + any inline text inside
+     * the footer don't inherit the host theme's body size. */
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.tl-footer > span:first-child {
+    font-weight: 500;
+    color: #6b6b6b;
+    margin-right: 8px;
+}
+
+.tl-footer.show {
+    display: block;
+}
+
+.tl-footer button:not(#i) {
+    background: transparent !important;
+    color: currentColor;
+    /* Reset the browser default `2px outset` border that leaked through
+     * the previous rule and made the copy button look like a chunky
+     * Win98 control. */
+    border: 0;
+    border-radius: 4px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    margin: 0 0 0 4px;
+    padding: 0;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tl-footer button:not(#i):hover,
+.tl-footer button:not(#i):focus-visible {
+    background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.tl-footer button:not(#i):focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.4);
+}
+
+.tl-footer button:not(#i) svg {
+    display: block;
+    margin: auto;
+}
+
+.tl-site-key-row {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.tl-site-key-row .tl-key-copied-message {
+    display: none;
+}
+
+.tl-site-key-row .tl-key-copied-message.tl-key-copied {
+    display: block;
+    position: absolute;
+    top: -28px;
+    right: 10px;
+    background: #555;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    /* Pin font-size so the tooltip doesn't inherit the host theme's body
+     * text (20-24px under gform-theme__disable-reset). */
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 500;
+    white-space: nowrap;
+    animation: fadeInOpacity;
+    animation-duration: 0.5s;
+}
+
+.tl-footer .tl-site-key {
+    font-weight: 400;
+    color: #6b6b6b;
+    font-size: 14px;
+    position: relative;
+    top: 2px;
+}
+
+
+.tl-logo,
+.wpforms-field .tl-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+    height: 66px;
+    width: 72px;
+    position: relative;
+}
+
+.tl-input,
+.wpforms-field .tl-input {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+    padding: 24px;
+    position: relative;
+}
+
+/* The .tl-field holds the URL input + an optional label. Label placement
+ * is driven by one of the modifier classes below (.tl-label-above etc.)
+ * so the field honours the GF form/field labelPlacement setting. */
+.tl-input .tl-field {
+    display: flex;
+    gap: 6px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+/* --- Label above input (GF default "top_label") --- */
+.tl-input .tl-field.tl-label-above {
+    flex-direction: column;
+}
+.tl-input .tl-field.tl-label-above .tl-field-label {
+    order: 0;
+}
+.tl-input .tl-field.tl-label-above .ginput_container {
+    order: 1;
+}
+
+/* --- Label below input ("inputs_above_labels") --- */
+.tl-input .tl-field.tl-label-below {
+    flex-direction: column;
+}
+.tl-input .tl-field.tl-label-below .tl-field-label {
+    order: 1;
+}
+.tl-input .tl-field.tl-label-below .ginput_container {
+    order: 0;
+}
+
+/* --- Label left of input --- */
+.tl-input .tl-field.tl-label-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.tl-input .tl-field.tl-label-left .tl-field-label {
+    flex: 0 0 auto;
+    margin: 0;
+}
+.tl-input .tl-field.tl-label-left .ginput_container {
+    flex: 1 1 auto;
+}
+
+/* --- Label right of input --- */
+.tl-input .tl-field.tl-label-right {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 12px;
+}
+.tl-input .tl-field.tl-label-right .tl-field-label {
+    flex: 0 0 auto;
+    margin: 0;
+}
+.tl-input .tl-field.tl-label-right .ginput_container {
+    flex: 1 1 auto;
+}
+
+/* --- Label hidden (screen-reader only) --- */
+.tl-input .tl-field.tl-label-hidden .tl-field-label {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect( 0, 0, 0, 0 );
+    white-space: nowrap;
+    border: 0;
+}
+
+.tl-input .tl-submit {
+    display: flex;
+    flex: 0 0 auto;
+    /* The parent .tl-input uses align-items: center; opt this flex item out
+     * so the button aligns with the BOTTOM of the row instead of the middle
+     * — making its bottom edge match the input's bottom edge exactly. */
+    align-self: flex-end;
+}
+
+/* When the label is beside, hidden, or below the input there's no stacking,
+ * so center alignment lines everything up correctly. */
+.tl-input:has( .tl-field.tl-label-below ) .tl-submit,
+.tl-input:has( .tl-field.tl-label-left ) .tl-submit,
+.tl-input:has( .tl-field.tl-label-right ) .tl-submit,
+.tl-input:has( .tl-field.tl-label-hidden ) .tl-submit {
+    align-self: center;
+}
+
+.tl-progress,
+.wpforms-field .tl-progress {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    background: rgb(0,115,170);
+    background: linear-gradient(90deg, rgba(0,115,170,1) 75%, rgba(0,172,255,1) 100%);
+    height: 2px;
+    transition: width 100ms ease;
+    width: 0%;
+}
+
+.tl-logo {
+    position: relative;
+}
+
+.tl-logo svg {
+    /* Constrain both dimensions so the inline SVG doesn't balloon when the
+     * wrapper's height overflows (viewBox = 72x72 but the wrapper is 66h). */
+    width: 100%;
+    height: 100%;
+    max-width: 72px;
+    max-height: 72px;
+    display: block;
+}
+
+.tl-logo svg + svg {
+    /* The second SVG (the 34x34 check-mark overlay used for the granted state)
+     * should not grow to the wrapper size — it's meant to overlay the first. */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    max-width: 34px;
+    max-height: 34px;
+}
+
+@keyframes logoGranting {
+    0% {
+        stroke-dashoffset: 214;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+.tl-loading #eVRu5XlC1mq12 {
+    stroke-dasharray: calc(214 / 6) calc(214 * 5 / 6); /* Green 1/6, Gray 5/6 */
+    stroke: #119A27;
+    animation: logoGranting 2s linear infinite;
+}
+
+.tl-granted #eVRu5XlC1mq12 {
+    stroke-dasharray: 214 0;
+}
+
+#eVRu5XlC1mq2 {
+    display: none;
+}
+
+@keyframes checkmarkMove {
+    0% {
+        right: 16px;
+        top: 15px;
+        width: 38px;
+        height: 38px;
+    }
+    50% {
+        right: 16px;
+        top: 15px;
+        width: 38px;
+        height: 38px;
+    }
+    100% {
+        right: 2px;
+        top: 0;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.tl-granted #eVRu5XlC1mq2 {
+    position: absolute;
+    display: block;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    background: #fff;
+    animation: checkmarkMove 1s ease-in-out forwards;
+}
+
+#tl-loader,
+.wpforms-field #tl-loader {
+    transition: all 600ms ease;
+    opacity: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.tl-input input[type='submit']:not(#i),
+.tl-input button[type='submit']:not(#i) {
+    white-space: nowrap;
+    /* TrustedLogin-branded button — deliberately distinct from the
+     * surrounding form theme so users recognise it as a third-party
+     * grant-access control. Uses the navy from the logo's outer lock.
+     * Height matches .tl-input input[type='url'] (40px) exactly. */
+    background-color: #1b2b59;
+    border: 1px solid #1b2b59;
+    color: #ffffff;
+    padding: 0 20px;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 40px;
+    box-sizing: border-box;
+    transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.tl-input input[type='submit']:not(#i):hover,
+.tl-input button[type='submit']:not(#i):hover,
+.tl-input input[type='submit']:not(#i):focus,
+.tl-input button[type='submit']:not(#i):focus {
+    background-color: #122042;
+    border-color: #122042;
+}
+
+/* Disabled state: light, muted version of the brand color so the button
+ * still reads as "inactive" rather than "broken". */
+.tl-input input[type='submit']:not(#i):disabled,
+.tl-input button[type='submit']:not(#i):disabled {
+    background-color: #bcd1e6;
+    border-color: #bcd1e6;
+    color: #ffffff;
+    cursor: not-allowed;
+}
+
+/* Revoke state: outlined red button to signal a destructive action. */
+.tl-input input[type='submit'].can-revoke,
+.tl-input button[type='submit'].can-revoke {
+    background-color: #ffffff;
+    border: 1px solid #c02b0a;
+    color: #c02b0a;
+}
+
+.tl-input input[type='submit'].can-revoke:hover,
+.tl-input button[type='submit'].can-revoke:hover {
+    background-color: #fff5f5;
+    border-color: #9b2c2c;
+    color: #9b2c2c;
+}
+
+.tl-input input[type='url']::placeholder {
+    color: #777771;
+}
+
+.tl-input input[type='url']:read-only {
+    background-color: #f5f5f5;
+    color: #545454;
+}
+
+.tl-input input[type='url'] {
+    border: 1px solid #d0d5dd;
+    border-radius: 4px;
+    /* Input + submit share the SAME height (40px) so they line up
+     * pixel-perfect regardless of the surrounding form theme:
+     *   height = 2 * 9px (padding) + 1.4em (line-height at 15px = 21px) + 2 * 1px (border)
+     *          = 41px → set box-sizing below to keep width honest. */
+    padding: 9px 12px;
+    background-color: #ffffff;
+    font-size: 15px;
+    line-height: 1.4;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.tl-input input[type='url']:focus {
+    border-color: #1099d6;
+    outline: 2px solid rgba( 16, 153, 214, 0.2 );
+    outline-offset: -1px;
+}
+
+.tl-field {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* Let the URL input fill the tl-field wrapper so it behaves like GF's
+ * large Website field rather than shrinking to its placeholder width. */
+.tl-field .ginput_container_website,
+.tl-field .ginput_container_website input,
+.tl-field input.tl-site-url {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Legacy revoke state (replaced by the themed rule above). */
+
+.tl-input .tl-error:not(#i) {
+    border: 1px solid #c02b0a;
+}
+
+/* Form builder fixes */
+
+/* Contact Form 7 */
+.wpcf7 .tl-input label {
+    width: 100%;
+    position: relative;
+}
+
+.wpcf7 .tl-input input[type='submit'] {
+    margin-bottom: .5em;
+}
+
+.tl-header label {
+    margin: 0;
+    padding: 0;
+}
+
+/* Gravity Forms */
+.gform_wrapper .tl-header * {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.wp-admin .tl-field input {
+    block-size: 38px;
+}
+.wp-admin .gfield--type-trustedlogin .gfield-admin-wrapper > label {
+    display: none;
+}
+
+/* WP Forms */
+.wpforms-field .tl-grant-access {
+    border: 1px solid var(--wpforms-field-border-color);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wpforms-field .tl-header {
+    border-bottom: 1px solid var(--wpforms-field-border-color);
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    padding: 16px 24px;
+    color: var(--wpforms-label-color);
+}
+
+.wpforms-field .tl-header label {
+    font-weight: 700;
+}
+
+.wpforms-field .tl-input {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+    padding: 24px;
+}
+
+.wpforms-field .tl-input .tl-field-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.wpforms-container .wpforms-field .tl-input .tl-field-wrap input {
+    max-width: 100%;
+}
+
+/* Ninja Forms */
+.nf-field-container .tl-grant-access {
+    width: 100%;
+}
+
+.nf-field-container .tl-input .nf-field-label {
+    width: auto;
+    white-space: nowrap;
+}
+
+.nf-field-container .tl-header label {
+    font-weight: 700;
+}
+
+.nf-field-container .tl-grant-access div.nf-field-element {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nf-field-container .tl-grant-access .tl-field-wrap {
+    display: flex;
+    gap: 24px;
+    order: 15;
+    width: 100%;
+}
+
+.nf-field-container .tl-grant-access .tl-field-wrap .nf-field-element {
+    order: 0;
+}
+
+/* Formiddable Forms */
+.frm_form_fields .tl-input .tl-field-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.frm_form_fields .tl-input .frm_submit button {
+    margin-bottom: 0.1rem;
+}
+
+.frm_form_fields .tl-input .frm_form_field {
+    margin: auto 0 0;
+}
+
+.frm_form_fields .tl-grant-access label {
+    color: var(--label-color);
+}
+
+/* WS Forms */
+
+.tl-grant-access .wsf-field-wrapper {
+    flex: auto !important;
+}
+
+/* Forminator */
+.forminator-row .tl-grant-access .tl-header * {
+    color: #777771;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: 700;
+}
+
+.forminator-row .tl-grant-access .forminator-row.forminator-row-last {
+    margin-top: auto;
+    margin-bottom: 0.3rem;
+}
+
+/* -----------------------------------------------------------------
+ * Entry Detail (wp-admin Gravity Forms entry view) rendering
+ * ----------------------------------------------------------------- */
+.tl-entry-detail > div {
+    margin: 4px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.tl-entry-detail code {
+    padding: 2px 6px;
+    background: #f3f4f5;
+    border-radius: 3px;
+    font-size: 13px;
+}
+.tl-entry-detail .button-primary {
+    margin-top: 8px;
+}
+
+/* -----------------------------------------------------------------
+ * Error messages and popup-blocked fallback
+ * ----------------------------------------------------------------- */
+.tl-error-message {
+    margin: 0 12px 12px;
+    padding: 10px 12px;
+    color: #9b2c2c;
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 4px;
+    /* Explicit font-size + line-height — `em` inherits the host theme's
+     * body size, which under gform-theme__disable-reset can be 20-24px
+     * and make the message tower over the input it's explaining. */
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.tl-fallback-link {
+    margin: 0 12px 12px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.tl-fallback-link-anchor {
+    display: inline-block;
+    padding: 0.45rem 0.8rem;
+    color: #fff;
+    background: #2b6cb0;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.tl-fallback-link-anchor:hover,
+.tl-fallback-link-anchor:focus {
+    background: #2c5282;
+    text-decoration: underline;
+}
+
+.tl-grant-access.tl-has-error .tl-progress {
+    background: #fed7d7;
+}
+
+/*
+ * Gravity Forms editor — Compact View.
+ *
+ * The form editor adds .gform-compact-view to the fields container when
+ * the user toggles "Compact View". Built-in field types collapse to a
+ * single-line label preview because GF's editor.css hides .ginput_container
+ * for everything except #field_submit. Our field renders a custom
+ * .tl-grant-access wrapper instead of a .ginput_container, so without an
+ * override the lock SVG, URL input, and submit button keep rendering at
+ * full size — overflowing the row and obscuring sibling fields.
+ *
+ * Hide the heavy preview chrome and let .tl-header (which carries the
+ * "Grant Access with TrustedLogin" label) stand in as the compact preview.
+ */
+.gform-compact-view .gfield--type-trustedlogin .tl-input,
+.gform-compact-view .gfield--type-trustedlogin .tl-footer {
+    display: none;
+}
+
+.gform-compact-view .gfield--type-trustedlogin .tl-grant-access {
+    border: none;
+    background: transparent;
+}
+
+.gform-compact-view .gfield--type-trustedlogin .tl-header {
+    border-bottom: none;
+    padding: 0;
+}
+
+/*
+ * Form editor (non-compact) safety net for the lock badge — keeps the
+ * SVG bounded even if the surrounding .tl-input flex sizing fails to
+ * resolve (e.g., during a brief unstyled flash before this stylesheet
+ * resolves on slow connections, or under no-conflict mode mishaps).
+ */
+.wp-admin .gfield--type-trustedlogin .tl-logo svg {
+    inline-size: 72px;
+    block-size: 72px;
+    max-inline-size: 72px;
+    max-block-size: 72px;
+}
+
+.wp-admin .gfield--type-trustedlogin .tl-logo svg + svg {
+    inline-size: 34px;
+    block-size: 34px;
+    max-inline-size: 34px;
+    max-block-size: 34px;
+}
+
+/*
+ * Manual access-key recovery surface.
+ *
+ * Rendered by tl-field.js when the popup flow fails to deliver a key back
+ * to the parent (popup blocked, closed early, opener lost). The user can
+ * copy the key from the client's "Access granted" screen and paste it
+ * here to finish without restarting the grant.
+ */
+.tl-grant-access .tl-manual-key-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 24px 24px;
+    padding: 16px;
+    background: #f8f9fa;
+    border: 1px solid #d7dade;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.tl-grant-access .tl-manual-key-label {
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.tl-grant-access .tl-manual-key-hint {
+    color: #50575e;
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.tl-grant-access .tl-manual-key-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #fff;
+    color: #1d2327;
+    box-sizing: border-box;
+}
+
+.tl-grant-access .tl-manual-key-input:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: 2px solid transparent;
+}
+
+.tl-grant-access .tl-manual-key-submit {
+    align-self: flex-start;
+    cursor: pointer;
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "grassblade/userscore",
+    "version": "1.0",
+    "title": "User Score",
+    "category": "grassblade-blocks",
+    "icon": "businessman",
+    "description": "This will show user's Score based on your selection below.",
+    "attributes": {
+        "content_id" : {"type": "string"},
+        "show" : {"type": "string"},
+        "add" : {"type": "string"},
+        "label" : {"type": "string"},
+        "className" : {"type": "string"}
+      },
+    "supports": {
+        "html": false
+    },
+    "textdomain": "grassblade",
+    "render": "file:./render.php"
+}
