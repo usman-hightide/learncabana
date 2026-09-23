@@ -974,7 +974,14 @@ function lc_manager_report_render_tools_page() {
 
 	// Optional preview: ?preview_user=ID
 	$preview_user = isset( $_GET['preview_user'] ) ? absint( $_GET['preview_user'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$preview_html = $preview_user ? get_user_meta( $preview_user, 'lc_manager_last_report_html', true ) : '';
+	$preview_html = '';
+	if ( $preview_user ) {
+		$preview_html = get_user_meta( $preview_user, 'lc_manager_last_report_html', true );
+		if ( ! is_string( $preview_html ) ) {
+			$preview_html = '';
+		}
+	}
+	$preview_user_obj = $preview_user ? get_userdata( $preview_user ) : false;
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Manager Learning Follow-up Test', 'astra-child' ); ?></h1>
@@ -996,9 +1003,7 @@ function lc_manager_report_render_tools_page() {
 			<div class="notice notice-info is-dismissible"><p>
 				<?php
 				echo esc_html(
-					sprintf(
-						__( 'Dry-run finished (no emails sent). Managers with data processed: check summary below. Preview with ?preview_user=USER_ID', 'astra-child' )
-					)
+					__( 'Dry-run finished (no emails sent). Open View HTML on any row with Has data = yes to preview the email at the top of this page.', 'astra-child' )
 				);
 				?>
 				<?php echo esc_html( sprintf( ' Skipped empty: %d.', $skipped ) ); ?>
@@ -1019,6 +1024,52 @@ function lc_manager_report_render_tools_page() {
 				<?php esc_html_e( 'Run live (send emails)', 'astra-child' ); ?>
 			</a>
 		</p>
+
+		<?php if ( $preview_user && $preview_html ) : ?>
+			<div id="lc-manager-preview" style="margin: 20px 0 30px; padding: 16px; background: #fff; border: 2px solid #2271b1; border-radius: 4px; max-width: 980px;">
+				<h2 style="margin-top:0;">
+					<?php
+					echo esc_html(
+						sprintf(
+							/* translators: 1: user id 2: display name or email */
+							__( 'Email preview — user #%1$d (%2$s)', 'astra-child' ),
+							$preview_user,
+							$preview_user_obj ? $preview_user_obj->display_name : ''
+						)
+					);
+					?>
+				</h2>
+				<p>
+					<a class="button" href="<?php echo esc_url( admin_url( 'tools.php?page=lc-manager-report-test' ) ); ?>">
+						<?php esc_html_e( 'Close preview', 'astra-child' ); ?>
+					</a>
+				</p>
+				<hr>
+				<div class="lc-manager-preview-body">
+					<?php echo $preview_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- stored report HTML we generate ?>
+				</div>
+			</div>
+			<script>
+				(function () {
+					var el = document.getElementById('lc-manager-preview');
+					if (el) {
+						el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					}
+				})();
+			</script>
+		<?php elseif ( $preview_user && ! $preview_html ) : ?>
+			<div class="notice notice-error"><p>
+				<?php
+				echo esc_html(
+					sprintf(
+						/* translators: %d: user id */
+						__( 'No saved preview HTML for user #%d. Run Dry-run again, then click View HTML.', 'astra-child' ),
+						$preview_user
+					)
+				);
+				?>
+			</p></div>
+		<?php endif; ?>
 
 		<h2><?php esc_html_e( 'Last run summary', 'astra-child' ); ?></h2>
 		<?php if ( empty( $summary ) || empty( $summary['roles'] ) ) : ?>
@@ -1045,7 +1096,7 @@ function lc_manager_report_render_tools_page() {
 						<td><?php echo ! empty( $row['sent'] ) ? 'yes' : 'no'; ?></td>
 						<td>
 							<?php if ( ! empty( $row['has_data'] ) ) : ?>
-								<a href="<?php echo esc_url( admin_url( 'tools.php?page=lc-manager-report-test&preview_user=' . (int) $row['user_id'] ) ); ?>">
+								<a href="<?php echo esc_url( admin_url( 'tools.php?page=lc-manager-report-test&preview_user=' . (int) $row['user_id'] . '#lc-manager-preview' ) ); ?>">
 									<?php esc_html_e( 'View HTML', 'astra-child' ); ?>
 								</a>
 							<?php else : ?>
@@ -1057,14 +1108,6 @@ function lc_manager_report_render_tools_page() {
 				</tbody>
 			</table>
 			<p><?php echo esc_html( sprintf( 'Totals — sent: %d, skipped: %d', (int) ( $summary['sent'] ?? 0 ), (int) ( $summary['skipped'] ?? 0 ) ) ); ?></p>
-		<?php endif; ?>
-
-		<?php if ( $preview_html ) : ?>
-			<hr>
-			<h2><?php echo esc_html( sprintf( 'Preview for user #%d', $preview_user ) ); ?></h2>
-			<div style="background:#fff;border:1px solid #ccd0d4;padding:20px;max-width:980px;">
-				<?php echo $preview_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- stored report HTML we generate ?>
-			</div>
 		<?php endif; ?>
 	</div>
 	<?php
