@@ -206,20 +206,19 @@ add_action('wp', 'schedule_learn_dash_weekly_report');
 add_action('send_learn_dash_weekly_report', 'send_learn_dash_weekly_report_func');
 
 /***************************************************************************/
+
 /**
  * Supervisor weekly learning follow-up (SM / AM / DM) — Mondays.
+ * Ticket: Weekly Report Sent to Managers Email.
+ * Layout: Weekly Supervisor Email sample (manager-report.php).
  * Does not alter the learner weekly reminder above.
  */
 
-function sort_active_groups($group1, $group2){
-    return $group2['total']['not_started'] - $group1['total']['not_started'];
+if ( ! defined( 'LC_MANAGER_REPORT_WARN_DAYS' ) ) {
+	define( 'LC_MANAGER_REPORT_WARN_DAYS', 14 );
 }
 
-/**
- * Job titles Store Managers follow up with (ticket scope).
- *
- * @return string[]
- */
+/** @return string[] */
 function lc_manager_report_sm_team_titles() {
 	return array(
 		'Assistant Store Manager',
@@ -229,8 +228,6 @@ function lc_manager_report_sm_team_titles() {
 }
 
 /**
- * Role-specific follow-up copy for the manager email.
- *
  * @param string $role store_manager|area_manager|district_manager
  * @return string
  */
@@ -248,8 +245,7 @@ function lc_manager_report_follow_up_note( $role ) {
 }
 
 /**
- * Whether the manager weekly job should run now.
- * Mondays in site timezone, secure admin run, or wp-config force.
+ * Whether the cron body should run (Monday site-time, forced admin/test, or wp-config).
  *
  * @return bool
  */
@@ -257,21 +253,107 @@ function lc_manager_report_should_run() {
 	if ( ! empty( $GLOBALS['lc_manager_report_force'] ) ) {
 		return true;
 	}
-
 	if ( defined( 'LC_FORCE_MANAGER_REPORT' ) && LC_FORCE_MANAGER_REPORT ) {
 		return true;
 	}
-
-	// ISO-8601 numeric day: 1 = Monday (site timezone).
 	return (int) current_time( 'N' ) === 1;
 }
 
 /**
- * Direct reports for a manager (unlocked), optionally filtered by job_titles.
+ * Whether wp_mail should fire. Dry-run sets this false.
  *
- * @param int          $manager_id Manager user ID.
+ * @return bool
+ */
+function lc_manager_weekly_emails_enabled() {
+	if ( ! empty( $GLOBALS['lc_manager_report_dry_run'] ) ) {
+		return false;
+	}
+	return (bool) apply_filters( 'lc_enable_manager_weekly_emails', true );
+}
+
+function lc_manager_report_initial_stats() {
+	return array(
+		'enrollments' => array(
+			'week'  => array(
+				'enrolled'  => 0,
+				'activity'  => 0,
+				'minutes'   => 0,
+				'completed' => 0,
+			),
+			'total' => array(
+				'not_started' => 0,
+				'in_progress' => 0,
+				'warning'     => 0,
+				'overdue'     => 0,
+				'completed'   => 0,
+			),
+		),
+		'plans'   => array(
+			'met'     => 0,
+			'warning' => 0,
+			'not_met' => 0,
+		),
+		'certs'   => array(
+			'met'     => 0,
+			'warning' => 0,
+			'not_met' => 0,
+		),
+		'actions' => array(
+			'accepted' => 0,
+			'review'   => 0,
+			'pending'  => 0,
+		),
+	);
+}
+
+function lc_manager_report_initial_group_stats() {
+	return array(
+		'learner_ids' => array(),
+		'week'        => array(
+			'activity'  => 0,
+			'completed' => 0,
+		),
+		'total'       => array(
+			'not_started' => 0,
+			'active'      => 0,
+			'warning'     => 0,
+			'overdue'     => 0,
+			'completed'   => 0,
+		),
+	);
+}
+
+/**
+ * Normalize job_titles meta (string or list) for comparison.
+ *
+ * @param mixed $raw Meta value.
+ * @return string[]
+ */
+function lc_manager_report_normalize_titles( $raw ) {
+	if ( is_array( $raw ) ) {
+		return array_values(
+			array_filter(
+				array_map(
+					static function ( $t ) {
+						return is_string( $t ) ? trim( $t ) : '';
+					},
+					$raw
+				)
+			)
+		);
+	}
+	if ( is_string( $raw ) && '' !== $raw ) {
+		return array( trim( $raw ) );
+	}
+	return array();
+}
+
+/**
+ * Direct reports for a manager; optional job_titles allow-list.
+ *
+ * @param int           $manager_id Manager user ID.
  * @param string[]|null $job_titles Allowed titles, or null for any.
- * @return object[] Rows with ID and user_locked.
+ * @return object[] Rows with ID.
  */
 function lc_manager_report_get_direct_reports( $manager_id, $job_titles = null ) {
 	global $wpdb;
@@ -303,8 +385,8 @@ function lc_manager_report_get_direct_reports( $manager_id, $job_titles = null )
 			continue;
 		}
 		if ( is_array( $job_titles ) && ! empty( $job_titles ) ) {
-			$title = get_user_meta( (int) $user->ID, 'job_titles', true );
-			if ( ! in_array( $title, $job_titles, true ) ) {
+			$titles = lc_manager_report_normalize_titles( get_user_meta( (int) $user->ID, 'job_titles', true ) );
+			if ( empty( array_intersect( $titles, $job_titles ) ) ) {
 				continue;
 			}
 		}
@@ -314,445 +396,552 @@ function lc_manager_report_get_direct_reports( $manager_id, $job_titles = null )
 	return $out;
 }
 
-function send_learn_dash_weekly_report_manager_func() {
-    if ( ! lc_manager_report_should_run() ) {
-        return;
-    }
+/**
+ * Classify one enrollment: not_started|active|warning|overdue|completed
+ *
+ * @param int $user_id User ID.
+ * @param int $course_id Course ID.
+ * @return string
+ */
+function lc_manager_classify_course_status( $user_id, $course_id ) {
+	$progress = function_exists( 'learndash_user_get_course_progress' )
+		? learndash_user_get_course_progress( $user_id, $course_id )
+		: array();
+	$status   = isset( $progress['status'] ) ? (string) $progress['status'] : 'not_started';
 
-    global $wpdb;
-    
-    $last_week_time = time() - 604800;
-    
-    $initial = array(
-        'enrollments' => array(
-            'week' => array(
-                'enrolled' => 0,
-                'activity' => 0,
-                'completed' => 0
-            ),
-            'total' => array(
-                'enrolled' => 0,
-                'not_started' => 0,
-                'in_progress' => 0,
-                'completed' => 0
-            )
-        ),
-        'plans' => array(
-            'met' => 0,
-            'not_met' => 0
-        ),
-        'actions' => array(
-            'accepted' => 0,
-            'pending' => 0
-        )
-    );
+	if ( 'completed' === $status ) {
+		return 'completed';
+	}
 
-    $initialGroup = array(
-        'week' => array(
-            'activity' => 0,
-            'completed' => 0
-        ),
-        'total' => array(
-            'enrolled' => 0,
-            'not_started' => 0,
-            'in_progress' => 0,
-            'completed' => 0
-        )
-    );
+	$due_raw = function_exists( 'get_field' ) ? get_field( 'due_date', $course_id ) : '';
+	$due_ts  = $due_raw ? strtotime( (string) $due_raw ) : false;
+	$today   = strtotime( 'today', (int) current_time( 'timestamp' ) );
 
-    // Get all users with LearnDash access
-    // $managers = get_users(array(
-    //     'role' => 'manager',
-    // ));
-    // $storeManagers = get_users(array(
-    //     'meta_key' => 'job_titles',
-    //     'meta_value' => ['Sales Associate', 'Shift Leader', 'Assistant Store Manager'],
-    //     'meta_compare' => 'IN'
-    // ));
-    $storeManagers = get_users(array(
-        'meta_key' => 'job_titles',
-        'meta_value' => 'Store Manager'
-    ));
-    $areaManagers = get_users(array(
-        'meta_key' => 'job_titles',
-        'meta_value' => 'Area Manager'
-    ));
-    $districtManagers = get_users(array(
-        'meta_key' => 'job_titles',
-        'meta_value' => 'District Manager'
-    ));
-    
-    if(!(empty($storeManagers) || count($storeManagers) == 0)){
-        foreach ($storeManagers as $storeManager) {
-            $stats = $initial;
-            $locked = get_user_meta($storeManager->ID, 'baba_user_locked', true);
-            if($locked === 'yes'){
-                continue;
-            }
+	if ( $due_ts ) {
+		if ( $due_ts < $today ) {
+			return 'overdue';
+		}
+		$warn_until = strtotime( '+' . (int) LC_MANAGER_REPORT_WARN_DAYS . ' days', $today );
+		if ( $due_ts <= $warn_until ) {
+			return 'warning';
+		}
+	}
 
-            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
-            $user_id = $storeManager->ID;
-            $user_email = $storeManager->user_email;
-            
-            $activeGroups = array();
+	if ( 'not_started' === $status || '' === $status ) {
+		return 'not_started';
+	}
 
-            // Ticket: SM follows up on ASM / Shift Leader / Sales Associate only.
-            $users = lc_manager_report_get_direct_reports( $user_id, lc_manager_report_sm_team_titles() );
-            if(count($users) > 0){
-                foreach ( $users as $user ) {
-                    $group_ids = learndash_get_users_group_ids($user->ID);
-                    foreach ($group_ids as $group_id) {
-                        $enrolled_courses = learndash_group_enrolled_courses($group_id);
-                        $group_time = (int) get_user_meta($user->ID, 'learndash_group_'.$group_id.'_enrolled_at', true);
-                        $groupStats = isset($activeGroups[''.$group_id]) ? $activeGroups[''.$group_id] : $initialGroup;
-                        // $group_completed_percentage = learndash_get_user_group_completed_percentage($group_ids[0], $user->ID);
-                        // $enrolled_courses = learndash_user_get_enrolled_courses($user->ID);
-                        foreach ($enrolled_courses as $course) {
-                            // $course_time = ld_course_access_from($course, $user->ID);
-                            if($group_time > $last_week_time){
-                                $stats['enrollments']['week']['enrolled'] += 1;
-                            }
-                            $stats['enrollments']['total']['enrolled'] += 1;
-                            $groupStats['total']['enrolled'] += 1;
-                            $course_progress = learndash_user_get_course_progress($user->ID, $course);
-                            if($course_progress['status'] === 'not_started'){
-                                $stats['enrollments']['total']['not_started'] += 1;
-                                $groupStats['total']['not_started'] += 1;
-                                $stats['plans']['not_met'] += 1;
-                            }
-                            else if($course_progress['status'] === 'in_progress'){
-                                $stats['enrollments']['total']['in_progress'] += 1;
-                                $groupStats['total']['in_progress'] += 1;
-                                $stats['plans']['not_met'] += 1;
-                                if($group_time > $last_week_time){
-                                    $stats['enrollments']['week']['activity'] += 1;
-                                    $groupStats['week']['activity'] += 1;
-                                }
-                            }
-                            else if($course_progress['status'] === 'completed'){
-                                $stats['enrollments']['total']['completed'] += 1;
-                                $groupStats['total']['completed'] += 1;
-                                $stats['plans']['met'] += 1;
-                                if($group_time > $last_week_time){
-                                    $stats['enrollments']['week']['completed'] += 1;
-                                    $groupStats['week']['completed'] += 1;
-                                }
-                            }
-                        }
-                        $activeGroups[''.$group_id] = $groupStats;
-                    }
-                    $total_assignments = $wpdb->get_var(
-                        $wpdb->prepare(
-                            "SELECT count(p.ID) as total
-                            FROM {$wpdb->posts} p
-                            LEFT JOIN {$wpdb->postmeta} m 
-                            ON m.post_id = p.ID AND m.meta_key = 'approval_status'
-                            WHERE p.post_type = 'sfwd-assignment' AND p.post_status = 'publish' AND p.post_author = %d",
-                            $user->ID,
-                        )
-                    );
-                    $approved_assignments = $wpdb->get_var(
-                        $wpdb->prepare(
-                            "SELECT count(m.meta_value) as total
-                            FROM {$wpdb->posts} p
-                            LEFT JOIN {$wpdb->postmeta} m 
-                            ON m.post_id = p.ID AND m.meta_key = 'approval_status'
-                            WHERE p.post_type = 'sfwd-assignment' AND p.post_status = 'publish' AND p.post_author = %d",
-                            $user->ID,
-                        )
-                    );
-                    $stats['actions']['accepted'] += $approved_assignments;
-                    $stats['actions']['pending'] += ($total_assignments - $approved_assignments);
-                }
-                //Sort groups by not started descending
-                usort($activeGroups, 'sort_active_groups');
-
-                //Store stats for further use
-                update_user_meta($user_id, 'lc_manager_stats', $stats);
-                update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
-
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $storeManager->display_name, 'store_manager');
-                
-                $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                wp_mail($user_email, $subject, $htmlTemplate, $headers);
-            }
-        }
-    }
-    if(!(empty($areaManagers) || count($areaManagers) == 0)){
-        foreach ($areaManagers as $areaManager) {
-            $stats = $initial;
-            $locked = get_user_meta($areaManager->ID, 'baba_user_locked', true);
-            if($locked === 'yes'){
-                continue;
-            }
-            
-            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
-            $user_id = $areaManager->ID;
-            $user_email = $areaManager->user_email;
-            $lastWeekHtml = '';
-            $totalEnrollmentsHtml = '';
-            $learningPlansHtml = '';
-            $actionStatusHtml = '';
-            $activeGroupsHtml = '';
-            $activeGroups = array();
-
-            // Ticket: AM sees SM+below (via SM rollups); follows up with Store Managers.
-            $users = lc_manager_report_get_direct_reports( $user_id, array( 'Store Manager' ) );
-
-            if(count($users) > 0){
-                foreach ( $users as $user ) {
-                    $lc_manager_stats = get_user_meta($user->ID, 'lc_manager_stats', true);
-                    $lc_manager_groups_stats = get_user_meta($user->ID, 'lc_manager_groups_stats', true);
-                    
-                    if(!empty($lc_manager_stats)){
-                        $stats['enrollments']['week']['enrolled'] += $lc_manager_stats['enrollments']['week']['enrolled'];
-                        $stats['enrollments']['week']['activity'] += $lc_manager_stats['enrollments']['week']['activity'];
-                        $stats['enrollments']['week']['completed'] += $lc_manager_stats['enrollments']['week']['completed'];
-
-                        $stats['enrollments']['total']['enrolled'] += $lc_manager_stats['enrollments']['total']['enrolled'];
-                        $stats['enrollments']['total']['not_started'] += $lc_manager_stats['enrollments']['total']['not_started'];
-                        $stats['enrollments']['total']['in_progress'] += $lc_manager_stats['enrollments']['total']['in_progress'];
-                        $stats['enrollments']['total']['completed'] += $lc_manager_stats['enrollments']['total']['completed'];
-                        
-                        $stats['plans']['met'] += $lc_manager_stats['plans']['met'];
-                        $stats['plans']['not_met'] += $lc_manager_stats['plans']['not_met'];
-                        
-                        $stats['actions']['accepted'] += $lc_manager_stats['actions']['accepted'];
-                        $stats['actions']['pending'] += $lc_manager_stats['actions']['pending'];
-                    }
-
-                    if(!empty($lc_manager_groups_stats)){
-                        foreach ($lc_manager_groups_stats as $group_id => $groups_stats) {
-                            if(isset($activeGroups[''.$group_id])){
-                                $activeGroups[''.$group_id]['total']['enrolled'] += $groups_stats['total']['enrolled'];
-                                $activeGroups[''.$group_id]['total']['not_started'] += $groups_stats['total']['not_started'];
-                                $activeGroups[''.$group_id]['total']['in_progress'] += $groups_stats['total']['in_progress'];
-                                $activeGroups[''.$group_id]['total']['completed'] += $groups_stats['total']['completed'];
-
-                                $activeGroups[''.$group_id]['week']['activity'] += $groups_stats['week']['activity'];
-                                $activeGroups[''.$group_id]['week']['completed'] += $groups_stats['week']['completed'];
-                            }
-                            else{
-                                $activeGroups[''.$group_id] = $groups_stats;
-                            }
-                        }
-                    }
-                }
-                //Sort groups by not started descending
-                usort($activeGroups, 'sort_active_groups');
-
-                //Store stats for further use
-                update_user_meta($user_id, 'lc_manager_stats', $stats);
-                update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
-
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $areaManager->display_name, 'area_manager');
-
-                $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                wp_mail($user_email, $subject, $htmlTemplate, $headers);
-            }
-        }
-    }
-    if(!(empty($districtManagers) || count($districtManagers) == 0)){
-        foreach ($districtManagers as $districtManager) {
-            $stats = $initial;
-            $locked = get_user_meta($districtManager->ID, 'baba_user_locked', true);
-            if($locked === 'yes'){
-                continue;
-            }
-            
-            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
-            $user_id = $districtManager->ID;
-            $user_email = $districtManager->user_email;
-            $lastWeekHtml = '';
-            $totalEnrollmentsHtml = '';
-            $learningPlansHtml = '';
-            $actionStatusHtml = '';
-            $activeGroupsHtml = '';
-            $activeGroups = array();
-
-            // Ticket: DM sees AM+below (via AM rollups); follows up with Area Managers.
-            $users = lc_manager_report_get_direct_reports( $user_id, array( 'Area Manager' ) );
-
-            if(count($users) > 0){
-                foreach ( $users as $user ) {
-                    $lc_manager_stats = get_user_meta($user->ID, 'lc_manager_stats', true);
-                    $lc_manager_groups_stats = get_user_meta($user->ID, 'lc_manager_groups_stats', true);
-                    
-                    if(!empty($lc_manager_stats)){
-                        $stats['enrollments']['week']['enrolled'] += $lc_manager_stats['enrollments']['week']['enrolled'];
-                        $stats['enrollments']['week']['activity'] += $lc_manager_stats['enrollments']['week']['activity'];
-                        $stats['enrollments']['week']['completed'] += $lc_manager_stats['enrollments']['week']['completed'];
-
-                        $stats['enrollments']['total']['enrolled'] += $lc_manager_stats['enrollments']['total']['enrolled'];
-                        $stats['enrollments']['total']['not_started'] += $lc_manager_stats['enrollments']['total']['not_started'];
-                        $stats['enrollments']['total']['in_progress'] += $lc_manager_stats['enrollments']['total']['in_progress'];
-                        $stats['enrollments']['total']['completed'] += $lc_manager_stats['enrollments']['total']['completed'];
-                        
-                        $stats['plans']['met'] += $lc_manager_stats['plans']['met'];
-                        $stats['plans']['not_met'] += $lc_manager_stats['plans']['not_met'];
-                        
-                        $stats['actions']['accepted'] += $lc_manager_stats['actions']['accepted'];
-                        $stats['actions']['pending'] += $lc_manager_stats['actions']['pending'];
-                    }
-
-                    if(!empty($lc_manager_groups_stats)){
-                        foreach ($lc_manager_groups_stats as $group_id => $groups_stats) {
-                            if(isset($activeGroups[''.$group_id])){
-                                $activeGroups[''.$group_id]['total']['enrolled'] += $groups_stats['total']['enrolled'];
-                                $activeGroups[''.$group_id]['total']['not_started'] += $groups_stats['total']['not_started'];
-                                $activeGroups[''.$group_id]['total']['in_progress'] += $groups_stats['total']['in_progress'];
-                                $activeGroups[''.$group_id]['total']['completed'] += $groups_stats['total']['completed'];
-
-                                $activeGroups[''.$group_id]['week']['activity'] += $groups_stats['week']['activity'];
-                                $activeGroups[''.$group_id]['week']['completed'] += $groups_stats['week']['completed'];
-                            }
-                            else{
-                                $activeGroups[''.$group_id] = $groups_stats;
-                            }
-                        }
-                    }
-                }
-                //Sort groups by not started descending
-                usort($activeGroups, 'sort_active_groups');
-
-                //Store stats for further use
-                update_user_meta($user_id, 'lc_manager_stats', $stats);
-                update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
-
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $districtManager->display_name, 'district_manager');
-
-                $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                wp_mail($user_email, $subject, $htmlTemplate, $headers);
-            }
-        }
-    }
-}
-
-function lcGenerateTemplate($stats, $activeGroups, $display_name, $role = 'store_manager'){
-    $lastWeekHtml = '';
-    $totalEnrollmentsHtml = '';
-    $learningPlansHtml = '';
-    $actionStatusHtml = '';
-    $activeGroupsHtml = '';
-    $htmlTemplate = $message = file_get_contents(dirname(__FILE__) . '/manager-report.php');
-
-    //Last week enrollments
-    $lastWeekHtml .= "<tr>";
-    $lastWeekHtml .= "<td style='padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;border-bottom: 1px solid #e4e4e4;'>".$stats['enrollments']['week']['enrolled']."</td>";
-    $lastWeekHtml .= "<td style='padding:5px 10px; text-align: center;border-bottom: 1px solid #e4e4e4;'>".$stats['enrollments']['week']['activity']."</td>";
-    $lastWeekHtml .= "<td style='padding:5px 10px; text-align: center;border-right: 1px solid #e6e6e6;border-bottom: 1px solid #e4e4e4;'>".$stats['enrollments']['week']['completed']."</td>";
-    $lastWeekHtml .= "</tr>";
-
-    //Total enrollments
-    $totalEnrollmentsHtml .= "<tr>";
-    $totalEnrollmentsHtml .= "<td style='border-bottom: 1px solid #e4e4e4;padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>".$stats['enrollments']['total']['not_started']."</td>";
-    $totalEnrollmentsHtml .= "<td style='border-bottom: 1px solid #e4e4e4;padding:5px 10px; text-align: center;'>".$stats['enrollments']['total']['in_progress']."</td>";
-    $totalEnrollmentsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;border-right: 1px solid #e6e6e6;'>".$stats['enrollments']['total']['completed']."</td>";
-    $totalEnrollmentsHtml .= "</tr>";
-    
-    //Learning Plans
-    $learningPlansHtml .= "<tr>";
-    $learningPlansHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>Learning Plans</td>";
-    $learningPlansHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$stats['plans']['met']."</td>";
-    $learningPlansHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;border-right: 1px solid #e6e6e6;'>".$stats['plans']['not_met']."</td>";
-    $learningPlansHtml .= "</tr>";
-    
-    //Action Status
-    $actionStatusHtml .= "<tr>";
-    $actionStatusHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>Actions</td>";
-    $actionStatusHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$stats['actions']['accepted']."</td>";
-    $actionStatusHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;border-right: 1px solid #e6e6e6;'>".$stats['actions']['pending']."</td>";
-    $actionStatusHtml .= "</tr>";
-
-    foreach($activeGroups as $group_id => $activeGroup){
-        $groupDetail = get_post($group_id);
-        $group_title = ( $groupDetail && ! empty( $groupDetail->post_title ) ) ? $groupDetail->post_title : ( 'Group #' . $group_id );
-        $activeGroupsHtml .= "<tr>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>".$group_title."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['enrolled']."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['not_started']."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['in_progress']."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['completed']."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['week']['activity']."</td>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center; border-right: 1px solid #e6e6e6;'>".$activeGroup['week']['completed']."</td>";
-        $activeGroupsHtml .= "</tr>";
-    }
-
-    $htmlTemplate = str_replace("{user_name}", $display_name, $htmlTemplate);
-    $htmlTemplate = str_replace("{reportDate}", date("d-M-Y", time()), $htmlTemplate);
-    $htmlTemplate = str_replace("{lastWeekStats}", $lastWeekHtml, $htmlTemplate);
-    $htmlTemplate = str_replace("{totalEnrollments}", $totalEnrollmentsHtml, $htmlTemplate);
-    $htmlTemplate = str_replace("{learningPlans}", $learningPlansHtml, $htmlTemplate);
-    $htmlTemplate = str_replace("{actionStatus}", $actionStatusHtml, $htmlTemplate);
-    $htmlTemplate = str_replace("{activeGroups}", $activeGroupsHtml, $htmlTemplate);
-    $htmlTemplate = str_replace("{follow_up_note}", lc_manager_report_follow_up_note( $role ), $htmlTemplate);
-
-    return $htmlTemplate;
+	return 'active';
 }
 
 /**
- * Schedule manager follow-up for Mondays 07:00 (site timezone).
- * Uses weekly interval from the next Monday anchor.
+ * Assignment actions: accepted (approved), review (submitted unapproved).
+ *
+ * @param array $stats Stats by ref.
+ * @param int   $user_id User ID.
  */
-function schedule_learn_dash_weekly__manager_report() {
-    $hook = 'send_learn_dash_weekly_manager_report';
+function lc_manager_accumulate_assignment_actions( &$stats, $user_id ) {
+	global $wpdb;
 
-    // Migrate away from any prior daily / mistimed schedule.
-    $existing = wp_next_scheduled( $hook );
-    if ( $existing ) {
-        $local_dow = (int) wp_date( 'N', $existing );
-        $local_hour = (int) wp_date( 'G', $existing );
-        if ( 1 !== $local_dow || 7 !== $local_hour ) {
-            wp_unschedule_event( $existing, $hook );
-            $existing = false;
-        }
-    }
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT p.ID, m.meta_value AS approval_status
+			FROM {$wpdb->posts} p
+			LEFT JOIN {$wpdb->postmeta} m
+				ON m.post_id = p.ID AND m.meta_key = 'approval_status'
+			WHERE p.post_type = 'sfwd-assignment'
+				AND p.post_status = 'publish'
+				AND p.post_author = %d",
+			$user_id
+		)
+	);
 
-    if ( ! $existing ) {
-        $tz = wp_timezone();
-        $now = new DateTimeImmutable( 'now', $tz );
-        $next = $now->modify( 'next Monday' )->setTime( 7, 0, 0 );
-        // If today is Monday and before 07:00, use today.
-        if ( 1 === (int) $now->format( 'N' ) && (int) $now->format( 'G' ) < 7 ) {
-            $next = $now->setTime( 7, 0, 0 );
-        }
-        wp_schedule_event( $next->getTimestamp(), 'weekly', $hook );
-    }
+	if ( empty( $rows ) ) {
+		return;
+	}
+
+	foreach ( $rows as $row ) {
+		if ( '1' === (string) $row->approval_status ) {
+			$stats['actions']['accepted'] += 1;
+		} else {
+			$stats['actions']['review'] += 1;
+		}
+	}
 }
 
+/**
+ * Build stats for a Store Manager from direct team members.
+ *
+ * @param int $store_manager_id Manager ID.
+ * @param int $last_week_time Unix cutoff.
+ * @return array{0:array,1:array}
+ */
+function lc_manager_build_store_manager_stats( $store_manager_id, $last_week_time ) {
+	$stats         = lc_manager_report_initial_stats();
+	$active_groups = array();
+	$users         = lc_manager_report_get_direct_reports( $store_manager_id, lc_manager_report_sm_team_titles() );
+
+	foreach ( $users as $user ) {
+		$user_id   = (int) $user->ID;
+		$group_ids = function_exists( 'learndash_get_users_group_ids' )
+			? learndash_get_users_group_ids( $user_id )
+			: array();
+
+		foreach ( (array) $group_ids as $group_id ) {
+			$group_id = (int) $group_id;
+			$gid      = (string) $group_id;
+			if ( ! isset( $active_groups[ $gid ] ) ) {
+				$active_groups[ $gid ] = lc_manager_report_initial_group_stats();
+			}
+			$active_groups[ $gid ]['learner_ids'][ $user_id ] = $user_id;
+
+			$group_time = (int) get_user_meta( $user_id, 'learndash_group_' . $group_id . '_enrolled_at', true );
+			$courses    = function_exists( 'learndash_group_enrolled_courses' )
+				? learndash_group_enrolled_courses( $group_id )
+				: array();
+
+			foreach ( (array) $courses as $course_id ) {
+				$course_id = (int) $course_id;
+				$bucket    = lc_manager_classify_course_status( $user_id, $course_id );
+
+				if ( $group_time > $last_week_time ) {
+					$stats['enrollments']['week']['enrolled'] += 1;
+					if ( function_exists( 'learndash_get_user_course_attempts_time_spent' ) ) {
+						$seconds = (int) learndash_get_user_course_attempts_time_spent( $user_id, $course_id );
+						if ( $seconds > 0 ) {
+							$stats['enrollments']['week']['minutes'] += (int) round( $seconds / 60 );
+						}
+					}
+				}
+
+				if ( 'completed' === $bucket ) {
+					$stats['enrollments']['total']['completed'] += 1;
+					$stats['plans']['met'] += 1;
+					$stats['certs']['met'] += 1;
+					$active_groups[ $gid ]['total']['completed'] += 1;
+					if ( $group_time > $last_week_time ) {
+						$stats['enrollments']['week']['completed'] += 1;
+						$active_groups[ $gid ]['week']['completed'] += 1;
+					}
+				} elseif ( 'overdue' === $bucket ) {
+					$stats['enrollments']['total']['overdue'] += 1;
+					$stats['plans']['not_met'] += 1;
+					$stats['certs']['not_met'] += 1;
+					$stats['actions']['pending'] += 1;
+					$active_groups[ $gid ]['total']['overdue'] += 1;
+				} elseif ( 'warning' === $bucket ) {
+					$stats['enrollments']['total']['warning'] += 1;
+					$stats['plans']['warning'] += 1;
+					$stats['certs']['warning'] += 1;
+					$stats['actions']['pending'] += 1;
+					$active_groups[ $gid ]['total']['warning'] += 1;
+				} elseif ( 'not_started' === $bucket ) {
+					$stats['enrollments']['total']['not_started'] += 1;
+					$stats['plans']['not_met'] += 1;
+					$stats['certs']['not_met'] += 1;
+					$stats['actions']['pending'] += 1;
+					$active_groups[ $gid ]['total']['not_started'] += 1;
+				} else {
+					$stats['enrollments']['total']['in_progress'] += 1;
+					$stats['plans']['not_met'] += 1;
+					$stats['certs']['not_met'] += 1;
+					$active_groups[ $gid ]['total']['active'] += 1;
+					if ( $group_time > $last_week_time ) {
+						$stats['enrollments']['week']['activity'] += 1;
+						$active_groups[ $gid ]['week']['activity'] += 1;
+					}
+				}
+			}
+		}
+
+		lc_manager_accumulate_assignment_actions( $stats, $user_id );
+	}
+
+	return array( $stats, $active_groups );
+}
+
+/**
+ * Roll up child manager saved stats (AM←SM, DM←AM).
+ *
+ * @param int      $manager_id Manager ID.
+ * @param string[] $child_titles Allowed child job titles.
+ * @return array{0:array,1:array}
+ */
+function lc_manager_rollup_from_child_managers( $manager_id, $child_titles ) {
+	$stats         = lc_manager_report_initial_stats();
+	$active_groups = array();
+	$children      = lc_manager_report_get_direct_reports( $manager_id, $child_titles );
+
+	foreach ( $children as $child ) {
+		$child_stats  = get_user_meta( $child->ID, 'lc_manager_stats', true );
+		$child_groups = get_user_meta( $child->ID, 'lc_manager_groups_stats', true );
+
+		if ( ! empty( $child_stats ) && is_array( $child_stats ) ) {
+			foreach ( array( 'enrolled', 'activity', 'minutes', 'completed' ) as $key ) {
+				$stats['enrollments']['week'][ $key ] += (int) ( $child_stats['enrollments']['week'][ $key ] ?? 0 );
+			}
+			foreach ( array( 'not_started', 'in_progress', 'warning', 'overdue', 'completed' ) as $key ) {
+				$stats['enrollments']['total'][ $key ] += (int) ( $child_stats['enrollments']['total'][ $key ] ?? 0 );
+			}
+			foreach ( array( 'met', 'warning', 'not_met' ) as $key ) {
+				$stats['plans'][ $key ] += (int) ( $child_stats['plans'][ $key ] ?? 0 );
+				$stats['certs'][ $key ] += (int) ( $child_stats['certs'][ $key ] ?? ( $child_stats['plans'][ $key ] ?? 0 ) );
+			}
+			foreach ( array( 'accepted', 'review', 'pending' ) as $key ) {
+				$stats['actions'][ $key ] += (int) ( $child_stats['actions'][ $key ] ?? 0 );
+			}
+		}
+
+		if ( empty( $child_groups ) || ! is_array( $child_groups ) ) {
+			continue;
+		}
+
+		foreach ( $child_groups as $group_id => $gstats ) {
+			// Ignore broken legacy numeric keys from previous usort bug when empty of totals.
+			$gid = (string) $group_id;
+			if ( ! isset( $active_groups[ $gid ] ) ) {
+				$active_groups[ $gid ] = lc_manager_report_initial_group_stats();
+			}
+			if ( ! empty( $gstats['learner_ids'] ) && is_array( $gstats['learner_ids'] ) ) {
+				foreach ( $gstats['learner_ids'] as $lid ) {
+					$active_groups[ $gid ]['learner_ids'][ (int) $lid ] = (int) $lid;
+				}
+			}
+			foreach ( array( 'not_started', 'active', 'warning', 'overdue', 'completed' ) as $key ) {
+				$active_groups[ $gid ]['total'][ $key ] += (int) ( $gstats['total'][ $key ] ?? 0 );
+			}
+			// Legacy in_progress → active.
+			if ( isset( $gstats['total']['in_progress'] ) && empty( $gstats['total']['active'] ) ) {
+				$active_groups[ $gid ]['total']['active'] += (int) $gstats['total']['in_progress'];
+			}
+			$active_groups[ $gid ]['week']['activity']  += (int) ( $gstats['week']['activity'] ?? 0 );
+			$active_groups[ $gid ]['week']['completed'] += (int) ( $gstats['week']['completed'] ?? 0 );
+		}
+	}
+
+	return array( $stats, $active_groups );
+}
+
+/**
+ * Sort groups by attention score; preserve keys (uasort).
+ *
+ * @param array $a Group stats.
+ * @param array $b Group stats.
+ * @return int
+ */
+function lc_manager_sort_active_groups( $a, $b ) {
+	$score_a = (int) ( $a['total']['overdue'] ?? 0 ) + (int) ( $a['total']['warning'] ?? 0 ) + (int) ( $a['total']['not_started'] ?? 0 );
+	$score_b = (int) ( $b['total']['overdue'] ?? 0 ) + (int) ( $b['total']['warning'] ?? 0 ) + (int) ( $b['total']['not_started'] ?? 0 );
+	return $score_b - $score_a;
+}
+
+/** @return string */
+function lc_manager_reporting_url() {
+	return esc_url( home_url( '/reporting-dashboard-2/?tab=userReportTab' ) );
+}
+
+/**
+ * @param int  $n Number.
+ * @param bool $link Whether to hyperlink when > 0.
+ * @return string
+ */
+function lc_manager_link_number( $n, $link = true ) {
+	$n = (int) $n;
+	if ( ! $link || $n <= 0 ) {
+		return (string) $n;
+	}
+	return '<a href="' . lc_manager_reporting_url() . '" style="color:#0066cc;text-decoration:underline;">' . $n . '</a>';
+}
+
+/**
+ * Build HTML email from manager-report.php.
+ *
+ * @param array  $stats Stats.
+ * @param array  $active_groups Groups keyed by ID.
+ * @param string $display_name Name.
+ * @param string $role Role key.
+ * @return string
+ */
+function lcGenerateTemplate( $stats, $active_groups, $display_name, $role = 'store_manager' ) {
+	$html = file_get_contents( dirname( __FILE__ ) . '/manager-report.php' );
+	$td   = 'border: 1px solid #e6e6e6; padding:5px 10px; text-align: center;';
+
+	$last_week  = '<tr>';
+	$last_week .= '<td style="' . $td . '">' . (int) $stats['enrollments']['week']['enrolled'] . '</td>';
+	$last_week .= '<td style="' . $td . '">' . (int) $stats['enrollments']['week']['activity'] . '</td>';
+	$last_week .= '<td style="' . $td . '">' . number_format_i18n( (int) $stats['enrollments']['week']['minutes'] ) . '</td>';
+	$last_week .= '<td style="' . $td . '">' . (int) $stats['enrollments']['week']['completed'] . '</td>';
+	$last_week .= '</tr>';
+
+	$total  = '<tr>';
+	$total .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['enrollments']['total']['not_started'] ) . '</td>';
+	$total .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['enrollments']['total']['in_progress'] ) . '</td>';
+	$total .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['enrollments']['total']['warning'] ) . '</td>';
+	$total .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['enrollments']['total']['overdue'] ) . '</td>';
+	$total .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['enrollments']['total']['completed'] ) . '</td>';
+	$total .= '</tr>';
+
+	$plans  = '<tr>';
+	$plans .= '<td style="' . $td . '">Learning Plans</td>';
+	$plans .= '<td style="' . $td . '">' . (int) $stats['plans']['met'] . '</td>';
+	$plans .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['plans']['warning'] ) . '</td>';
+	$plans .= '<td style="' . $td . '">' . (int) $stats['plans']['not_met'] . '</td>';
+	$plans .= '</tr>';
+
+	$certs  = '<tr>';
+	$certs .= '<td style="' . $td . '">Certifications</td>';
+	$certs .= '<td style="' . $td . '">' . (int) $stats['certs']['met'] . '</td>';
+	$certs .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['certs']['warning'] ) . '</td>';
+	$certs .= '<td style="' . $td . '">' . (int) $stats['certs']['not_met'] . '</td>';
+	$certs .= '</tr>';
+
+	$actions  = '<tr>';
+	$actions .= '<td style="' . $td . '">Actions</td>';
+	$actions .= '<td style="' . $td . '">' . (int) $stats['actions']['accepted'] . '</td>';
+	$actions .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['actions']['review'] ) . '</td>';
+	$actions .= '<td style="' . $td . '">' . lc_manager_link_number( $stats['actions']['pending'] ) . '</td>';
+	$actions .= '</tr>';
+
+	$groups_html = '';
+	if ( ! empty( $active_groups ) && is_array( $active_groups ) ) {
+		uasort( $active_groups, 'lc_manager_sort_active_groups' );
+		foreach ( $active_groups as $group_id => $g ) {
+			$post     = get_post( (int) $group_id );
+			$title    = ( $post && ! empty( $post->post_title ) ) ? $post->post_title : ( 'Group #' . $group_id );
+			$learners = ! empty( $g['learner_ids'] ) ? count( $g['learner_ids'] ) : 0;
+
+			$groups_html .= '<tr>';
+			$groups_html .= '<td style="' . $td . '">' . esc_html( $title ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . (int) $learners . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . lc_manager_link_number( $g['total']['not_started'] ?? 0 ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . lc_manager_link_number( $g['total']['active'] ?? 0 ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . lc_manager_link_number( $g['total']['warning'] ?? 0 ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . lc_manager_link_number( $g['total']['overdue'] ?? 0 ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . (int) ( $g['week']['activity'] ?? 0 ) . '</td>';
+			$groups_html .= '<td style="' . $td . '">' . (int) ( $g['week']['completed'] ?? 0 ) . '</td>';
+			$groups_html .= '</tr>';
+		}
+	}
+
+	$replacements = array(
+		'{user_name}'        => esc_html( $display_name ),
+		'{reportDate}'       => esc_html( date_i18n( 'd-M-Y' ) ),
+		'{follow_up_note}'   => esc_html( lc_manager_report_follow_up_note( $role ) ),
+		'{reporting_url}'    => lc_manager_reporting_url(),
+		'{lastWeekStats}'    => $last_week,
+		'{totalEnrollments}' => $total,
+		'{learningPlans}'    => $plans,
+		'{certifications}'   => $certs,
+		'{actionStatus}'     => $actions,
+		'{activeGroups}'     => $groups_html,
+	);
+
+	return str_replace( array_keys( $replacements ), array_values( $replacements ), $html );
+}
+
+/**
+ * Persist stats and optionally email one manager.
+ *
+ * @param WP_User $manager Manager.
+ * @param array   $stats Stats.
+ * @param array   $active_groups Groups.
+ * @param string  $role Role key.
+ * @return array Result meta for logging/tests.
+ */
+function lc_manager_process_and_maybe_send( $manager, $stats, $active_groups, $role ) {
+	$result = array(
+		'user_id'    => (int) $manager->ID,
+		'email'      => $manager->user_email,
+		'role'       => $role,
+		'sent'       => false,
+		'skipped'    => false,
+		'has_data'   => false,
+	);
+
+	update_user_meta( $manager->ID, 'lc_manager_stats', $stats );
+	update_user_meta( $manager->ID, 'lc_manager_groups_stats', $active_groups );
+
+	$has_data = (
+		(int) $stats['enrollments']['total']['not_started']
+		+ (int) $stats['enrollments']['total']['in_progress']
+		+ (int) $stats['enrollments']['total']['warning']
+		+ (int) $stats['enrollments']['total']['overdue']
+		+ (int) $stats['enrollments']['total']['completed']
+	) > 0;
+	$result['has_data'] = $has_data;
+
+	if ( ! $has_data ) {
+		$result['skipped'] = true;
+		return $result;
+	}
+
+	$html    = lcGenerateTemplate( $stats, $active_groups, $manager->display_name, $role );
+	$subject = 'Weekly Learning Follow-up Reminder - ' . date_i18n( 'd-M-Y' ) . ' for Cannabis Learning';
+	$headers = array(
+		'Content-Type: text/html; charset=UTF-8',
+		'From: Learncabana <admin@learncabana.com>',
+	);
+
+	// Always store last rendered HTML for admin preview/debug.
+	update_user_meta( $manager->ID, 'lc_manager_last_report_html', $html );
+	update_user_meta( $manager->ID, 'lc_manager_last_report_at', time() );
+
+	if ( ! lc_manager_weekly_emails_enabled() ) {
+		$result['skipped'] = true;
+		return $result;
+	}
+
+	$sent = wp_mail( $manager->user_email, $subject, $html, $headers );
+	$result['sent'] = (bool) $sent;
+	return $result;
+}
+
+/**
+ * Main job: SM → AM → DM.
+ *
+ * @return array Summary for tests/admin notice.
+ */
+function send_learn_dash_weekly_report_manager_func() {
+	$summary = array(
+		'ran'     => false,
+		'sent'    => 0,
+		'skipped' => 0,
+		'roles'   => array(),
+	);
+
+	if ( ! lc_manager_report_should_run() ) {
+		return $summary;
+	}
+	$summary['ran'] = true;
+
+	$last_week_time = time() - WEEK_IN_SECONDS;
+
+	$store_managers = get_users(
+		array(
+			'meta_key'   => 'job_titles',
+			'meta_value' => 'Store Manager',
+			'number'     => -1,
+		)
+	);
+	$area_managers = get_users(
+		array(
+			'meta_key'   => 'job_titles',
+			'meta_value' => 'Area Manager',
+			'number'     => -1,
+		)
+	);
+	$district_managers = get_users(
+		array(
+			'meta_key'   => 'job_titles',
+			'meta_value' => 'District Manager',
+			'number'     => -1,
+		)
+	);
+
+	foreach ( $store_managers as $manager ) {
+		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+			continue;
+		}
+		list( $stats, $groups ) = lc_manager_build_store_manager_stats( $manager->ID, $last_week_time );
+		$r = lc_manager_process_and_maybe_send( $manager, $stats, $groups, 'store_manager' );
+		$summary['roles'][] = $r;
+		if ( $r['sent'] ) {
+			$summary['sent']++;
+		} elseif ( $r['skipped'] ) {
+			$summary['skipped']++;
+		}
+	}
+
+	foreach ( $area_managers as $manager ) {
+		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+			continue;
+		}
+		list( $stats, $groups ) = lc_manager_rollup_from_child_managers( $manager->ID, array( 'Store Manager' ) );
+		$r = lc_manager_process_and_maybe_send( $manager, $stats, $groups, 'area_manager' );
+		$summary['roles'][] = $r;
+		if ( $r['sent'] ) {
+			$summary['sent']++;
+		} elseif ( $r['skipped'] ) {
+			$summary['skipped']++;
+		}
+	}
+
+	foreach ( $district_managers as $manager ) {
+		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+			continue;
+		}
+		list( $stats, $groups ) = lc_manager_rollup_from_child_managers( $manager->ID, array( 'Area Manager' ) );
+		$r = lc_manager_process_and_maybe_send( $manager, $stats, $groups, 'district_manager' );
+		$summary['roles'][] = $r;
+		if ( $r['sent'] ) {
+			$summary['sent']++;
+		} elseif ( $r['skipped'] ) {
+			$summary['skipped']++;
+		}
+	}
+
+	update_option( 'lc_manager_report_last_summary', $summary, false );
+	return $summary;
+}
+
+/**
+ * Schedule Mondays 07:00 site timezone (weekly).
+ */
+function schedule_learn_dash_weekly__manager_report() {
+	$hook     = 'send_learn_dash_weekly_manager_report';
+	$existing = wp_next_scheduled( $hook );
+	if ( $existing ) {
+		$local_dow  = (int) wp_date( 'N', $existing );
+		$local_hour = (int) wp_date( 'G', $existing );
+		if ( 1 !== $local_dow || 7 !== $local_hour ) {
+			wp_unschedule_event( $existing, $hook );
+			$existing = false;
+		}
+	}
+
+	if ( ! $existing ) {
+		$tz   = wp_timezone();
+		$now  = new DateTimeImmutable( 'now', $tz );
+		$next = $now->modify( 'next Monday' )->setTime( 7, 0, 0 );
+		if ( 1 === (int) $now->format( 'N' ) && (int) $now->format( 'G' ) < 7 ) {
+			$next = $now->setTime( 7, 0, 0 );
+		}
+		wp_schedule_event( $next->getTimestamp(), 'weekly', $hook );
+	}
+}
 add_action( 'wp', 'schedule_learn_dash_weekly__manager_report' );
 add_action( 'send_learn_dash_weekly_manager_report', 'send_learn_dash_weekly_report_manager_func' );
 
-/**
- * Secure admin-only run URL (nonce + manage_options).
- * Prefer the Tools page button; URL shape:
- *   /wp-admin/admin-post.php?action=lc_run_manager_report&_wpnonce=...
- */
-function lc_manager_report_get_secure_run_url() {
-	return wp_nonce_url(
-		admin_url( 'admin-post.php?action=lc_run_manager_report' ),
-		'lc_run_manager_report'
-	);
+/** @return string */
+function lc_manager_report_get_secure_run_url( $dry_run = false ) {
+	$args = array( 'action' => 'lc_run_manager_report' );
+	if ( $dry_run ) {
+		$args['dry_run'] = '1';
+	}
+	return wp_nonce_url( add_query_arg( $args, admin_url( 'admin-post.php' ) ), 'lc_run_manager_report' );
 }
 
-/**
- * Handle secure admin run — emails all in-scope SM / AM / DM.
- */
 function lc_manager_report_handle_secure_admin_run() {
 	if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
 		wp_die( esc_html__( 'Forbidden', 'astra-child' ), 403 );
 	}
-
 	check_admin_referer( 'lc_run_manager_report' );
 
+	$dry = ! empty( $_GET['dry_run'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( $dry ) {
+		$GLOBALS['lc_manager_report_dry_run'] = true;
+	}
 	$GLOBALS['lc_manager_report_force'] = true;
-	send_learn_dash_weekly_report_manager_func();
-	unset( $GLOBALS['lc_manager_report_force'] );
+	$summary = send_learn_dash_weekly_report_manager_func();
+	unset( $GLOBALS['lc_manager_report_force'], $GLOBALS['lc_manager_report_dry_run'] );
 
 	wp_safe_redirect(
 		add_query_arg(
-			'lc_manager_report',
-			'done',
+			array(
+				'lc_manager_report' => $dry ? 'dry' : 'done',
+				'sent'              => isset( $summary['sent'] ) ? (int) $summary['sent'] : 0,
+				'skipped'           => isset( $summary['skipped'] ) ? (int) $summary['skipped'] : 0,
+			),
 			admin_url( 'tools.php?page=lc-manager-report-test' )
 		)
 	);
@@ -760,9 +949,6 @@ function lc_manager_report_handle_secure_admin_run() {
 }
 add_action( 'admin_post_lc_run_manager_report', 'lc_manager_report_handle_secure_admin_run' );
 
-/**
- * Tools → Manager Follow-up Test (admins only).
- */
 function lc_manager_report_register_tools_page() {
 	add_management_page(
 		__( 'Manager Follow-up Test', 'astra-child' ),
@@ -774,40 +960,112 @@ function lc_manager_report_register_tools_page() {
 }
 add_action( 'admin_menu', 'lc_manager_report_register_tools_page' );
 
-/**
- * Render Tools page with Run button + secure URL.
- */
 function lc_manager_report_render_tools_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
-	$done = isset( $_GET['lc_manager_report'] ) && 'done' === $_GET['lc_manager_report']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$url  = lc_manager_report_get_secure_run_url();
+	$status  = isset( $_GET['lc_manager_report'] ) ? sanitize_text_field( wp_unslash( $_GET['lc_manager_report'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$sent    = isset( $_GET['sent'] ) ? (int) $_GET['sent'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$skipped = isset( $_GET['skipped'] ) ? (int) $_GET['skipped'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$summary = get_option( 'lc_manager_report_last_summary', array() );
+	$dry_url = lc_manager_report_get_secure_run_url( true );
+	$live_url = lc_manager_report_get_secure_run_url( false );
+
+	// Optional preview: ?preview_user=ID
+	$preview_user = isset( $_GET['preview_user'] ) ? absint( $_GET['preview_user'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$preview_html = $preview_user ? get_user_meta( $preview_user, 'lc_manager_last_report_html', true ) : '';
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'Manager Learning Follow-up Test', 'astra-child' ); ?></h1>
 
-		<?php if ( $done ) : ?>
-			<div class="notice notice-success is-dismissible">
-				<p><?php esc_html_e( 'Manager follow-up job finished (SM -> AM -> DM). Check WP Mail SMTP Email Log for results.', 'astra-child' ); ?></p>
-			</div>
+		<?php if ( 'done' === $status ) : ?>
+			<div class="notice notice-success is-dismissible"><p>
+				<?php
+				echo esc_html(
+					sprintf(
+						/* translators: 1: sent count 2: skipped count */
+						__( 'Live run finished. Emails sent: %1$d. Skipped (no team data / disabled): %2$d. Check WP Mail SMTP log.', 'astra-child' ),
+						$sent,
+						$skipped
+					)
+				);
+				?>
+			</p></div>
+		<?php elseif ( 'dry' === $status ) : ?>
+			<div class="notice notice-info is-dismissible"><p>
+				<?php
+				echo esc_html(
+					sprintf(
+						__( 'Dry-run finished (no emails sent). Managers with data processed: check summary below. Preview with ?preview_user=USER_ID', 'astra-child' )
+					)
+				);
+				?>
+				<?php echo esc_html( sprintf( ' Skipped empty: %d.', $skipped ) ); ?>
+			</p></div>
 		<?php endif; ?>
 
 		<div class="notice notice-warning">
-			<p><strong><?php esc_html_e( 'Warning:', 'astra-child' ); ?></strong>
-			<?php esc_html_e( 'This sends real emails to all unlocked Store, Area, and District Managers who have in-scope teams. Confirm mail delivery is working first.', 'astra-child' ); ?></p>
+			<p><strong><?php esc_html_e( 'Live send warning:', 'astra-child' ); ?></strong>
+			<?php esc_html_e( '“Run live” emails every unlocked SM / AM / DM who has in-scope team data. Prefer Dry-run on local/staging first.', 'astra-child' ); ?></p>
 		</div>
 
 		<p>
-			<a class="button button-primary" href="<?php echo esc_url( $url ); ?>"
-				onclick="return confirm('Send Weekly Learning Follow-up emails to all in-scope managers now?');">
-				<?php esc_html_e( 'Run manager follow-up now', 'astra-child' ); ?>
+			<a class="button button-secondary" href="<?php echo esc_url( $dry_url ); ?>">
+				<?php esc_html_e( 'Dry-run (build stats, no email)', 'astra-child' ); ?>
+			</a>
+			<a class="button button-primary" href="<?php echo esc_url( $live_url ); ?>"
+				onclick="return confirm('Send real Weekly Learning Follow-up emails to all in-scope managers now?');">
+				<?php esc_html_e( 'Run live (send emails)', 'astra-child' ); ?>
 			</a>
 		</p>
 
-		<p><strong><?php esc_html_e( 'Secure admin URL (expires with your login nonce):', 'astra-child' ); ?></strong></p>
-		<p><code style="word-break:break-all;"><?php echo esc_html( $url ); ?></code></p>
+		<h2><?php esc_html_e( 'Last run summary', 'astra-child' ); ?></h2>
+		<?php if ( empty( $summary ) || empty( $summary['roles'] ) ) : ?>
+			<p><?php esc_html_e( 'No summary yet. Run a dry-run.', 'astra-child' ); ?></p>
+		<?php else : ?>
+			<table class="widefat striped" style="max-width:900px;">
+				<thead>
+					<tr>
+						<th>User ID</th>
+						<th>Email</th>
+						<th>Role</th>
+						<th>Has data</th>
+						<th>Sent</th>
+						<th>Preview</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ( $summary['roles'] as $row ) : ?>
+					<tr>
+						<td><?php echo (int) $row['user_id']; ?></td>
+						<td><?php echo esc_html( $row['email'] ); ?></td>
+						<td><?php echo esc_html( $row['role'] ); ?></td>
+						<td><?php echo ! empty( $row['has_data'] ) ? 'yes' : 'no'; ?></td>
+						<td><?php echo ! empty( $row['sent'] ) ? 'yes' : 'no'; ?></td>
+						<td>
+							<?php if ( ! empty( $row['has_data'] ) ) : ?>
+								<a href="<?php echo esc_url( admin_url( 'tools.php?page=lc-manager-report-test&preview_user=' . (int) $row['user_id'] ) ); ?>">
+									<?php esc_html_e( 'View HTML', 'astra-child' ); ?>
+								</a>
+							<?php else : ?>
+								—
+							<?php endif; ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			<p><?php echo esc_html( sprintf( 'Totals — sent: %d, skipped: %d', (int) ( $summary['sent'] ?? 0 ), (int) ( $summary['skipped'] ?? 0 ) ) ); ?></p>
+		<?php endif; ?>
+
+		<?php if ( $preview_html ) : ?>
+			<hr>
+			<h2><?php echo esc_html( sprintf( 'Preview for user #%d', $preview_user ) ); ?></h2>
+			<div style="background:#fff;border:1px solid #ccd0d4;padding:20px;max-width:980px;">
+				<?php echo $preview_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- stored report HTML we generate ?>
+			</div>
+		<?php endif; ?>
 	</div>
 	<?php
 }
