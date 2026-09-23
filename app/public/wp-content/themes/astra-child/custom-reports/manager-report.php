@@ -5,7 +5,11 @@
     {user_name},
 
     <p style="margin-bottom: 30px;">
-        Here is your Report Dashboard Summary for {reportDate} for your team.:
+        Here is your weekly learning follow-up summary for {reportDate} for your team.
+    </p>
+
+    <p style="margin-bottom: 30px; padding: 12px 14px; background: #f5f5f5; border-left: 4px solid #2f6f4e;">
+        <strong>Follow-up this week:</strong> {follow_up_note}
     </p>
 
     <table class="border: 1px solid #e6e6e6;">
@@ -84,14 +88,11 @@
     <br>
     <br>
     <br/>
-    <p>The first section shows your teams' progress over the last week. It shows the number of enrollments and completions for
-        your team in the past seven days.<br><br>
-        The second section shows your teams' progress over time. Click on the hyperlinked numbers to log in and view the list of
-        any courses currently enrolled, in progress, in the warning period (due soon) or overdue.
+    <p>The first section shows your team's progress over the last week (enrollments, activity, and completions).<br><br>
+        The second section shows overall progress. Use the Reports Dashboard to review incomplete learning in more detail:<br>
+        <a href="https://learncabana.com/reporting-dashboard-2/?tab=userReportTab">Open User Report</a>
         <br><br>
-        If you have any team members who are onboarding, make sure to follow up on their progress. No new hires can be put on
-        the schedule to work independently before completing their onboarding program in full. If you have any questions or if any
-        on your team need support with their access, email cannabislearning@cannacabana.com.
+        No new hires should be scheduled to work independently before completing onboarding in full. For access support, email cannabislearning@cannacabana.com.
     </p>
     <br><br>
     <p>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 // Register a custom cron interval for every five minutes
 function custom_cron_intervals($schedules) {
@@ -206,13 +206,119 @@ add_action('wp', 'schedule_learn_dash_weekly_report');
 add_action('send_learn_dash_weekly_report', 'send_learn_dash_weekly_report_func');
 
 /***************************************************************************/
-
+/**
+ * Supervisor weekly learning follow-up (SM / AM / DM) — Mondays.
+ * Does not alter the learner weekly reminder above.
+ */
 
 function sort_active_groups($group1, $group2){
     return $group2['total']['not_started'] - $group1['total']['not_started'];
 }
 
+/**
+ * Job titles Store Managers follow up with (ticket scope).
+ *
+ * @return string[]
+ */
+function lc_manager_report_sm_team_titles() {
+	return array(
+		'Assistant Store Manager',
+		'Shift Leader',
+		'Sales Associate',
+	);
+}
+
+/**
+ * Role-specific follow-up copy for the manager email.
+ *
+ * @param string $role store_manager|area_manager|district_manager
+ * @return string
+ */
+function lc_manager_report_follow_up_note( $role ) {
+	switch ( $role ) {
+		case 'store_manager':
+			return 'Please follow up with your Assistant Store Managers, Shift Leaders, and Sales Associates on incomplete learning. Ensure overall completion for your store team before they work independently.';
+		case 'area_manager':
+			return 'The figures below include Store Managers and their teams in your area. Please follow up with your Store Managers — it is their responsibility to ensure all their staff are trained.';
+		case 'district_manager':
+			return 'The figures below include Area Managers and everyone under them in your district. Please follow up with your Area Managers — it is their responsibility to ensure all their stores are trained.';
+		default:
+			return 'Please follow up on incomplete learning for your team to ensure overall completion.';
+	}
+}
+
+/**
+ * Whether the manager weekly job should run now.
+ * Mondays in site timezone, secure admin run, or wp-config force.
+ *
+ * @return bool
+ */
+function lc_manager_report_should_run() {
+	if ( ! empty( $GLOBALS['lc_manager_report_force'] ) ) {
+		return true;
+	}
+
+	if ( defined( 'LC_FORCE_MANAGER_REPORT' ) && LC_FORCE_MANAGER_REPORT ) {
+		return true;
+	}
+
+	// ISO-8601 numeric day: 1 = Monday (site timezone).
+	return (int) current_time( 'N' ) === 1;
+}
+
+/**
+ * Direct reports for a manager (unlocked), optionally filtered by job_titles.
+ *
+ * @param int          $manager_id Manager user ID.
+ * @param string[]|null $job_titles Allowed titles, or null for any.
+ * @return object[] Rows with ID and user_locked.
+ */
+function lc_manager_report_get_direct_reports( $manager_id, $job_titles = null ) {
+	global $wpdb;
+
+	$manager_id = absint( $manager_id );
+	if ( ! $manager_id ) {
+		return array();
+	}
+
+	$users = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT u.ID, m1.meta_value AS user_locked
+			FROM {$wpdb->users} u
+			INNER JOIN {$wpdb->usermeta} m
+				ON m.user_id = u.ID AND m.meta_key = 'supervisor' AND m.meta_value = %s
+			LEFT JOIN {$wpdb->usermeta} m1
+				ON m1.user_id = u.ID AND m1.meta_key = 'baba_user_locked'",
+			(string) $manager_id
+		)
+	);
+
+	if ( empty( $users ) ) {
+		return array();
+	}
+
+	$out = array();
+	foreach ( $users as $user ) {
+		if ( null !== $user->user_locked && 'yes' === $user->user_locked ) {
+			continue;
+		}
+		if ( is_array( $job_titles ) && ! empty( $job_titles ) ) {
+			$title = get_user_meta( (int) $user->ID, 'job_titles', true );
+			if ( ! in_array( $title, $job_titles, true ) ) {
+				continue;
+			}
+		}
+		$out[] = $user;
+	}
+
+	return $out;
+}
+
 function send_learn_dash_weekly_report_manager_func() {
+    if ( ! lc_manager_report_should_run() ) {
+        return;
+    }
+
     global $wpdb;
     
     $last_week_time = time() - 604800;
@@ -284,28 +390,16 @@ function send_learn_dash_weekly_report_manager_func() {
                 continue;
             }
 
-            $subject = 'Weekly Summary Report - '.date('d-M-Y', time()).' for Cannabis Learning';
+            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
             $user_id = $storeManager->ID;
             $user_email = $storeManager->user_email;
             
             $activeGroups = array();
 
-            $users = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT u.ID, m1.meta_value AS user_locked
-                    FROM {$wpdb->users} u
-                    INNER JOIN {$wpdb->usermeta} m 
-                    ON m.user_id = u.ID AND m.meta_key = 'supervisor' AND m.meta_value = %d
-                    LEFT JOIN wp_usermeta m1 ON m1.user_id = u.ID AND m1.meta_key = 'baba_user_locked'",
-                    $user_id,
-                )
-            );
+            // Ticket: SM follows up on ASM / Shift Leader / Sales Associate only.
+            $users = lc_manager_report_get_direct_reports( $user_id, lc_manager_report_sm_team_titles() );
             if(count($users) > 0){
                 foreach ( $users as $user ) {
-                    if($user->user_locked != NULL && $user->user_locked === 'yes'){
-                        continue;
-                    }
-                    
                     $group_ids = learndash_get_users_group_ids($user->ID);
                     foreach ($group_ids as $group_id) {
                         $enrolled_courses = learndash_group_enrolled_courses($group_id);
@@ -377,11 +471,10 @@ function send_learn_dash_weekly_report_manager_func() {
                 update_user_meta($user_id, 'lc_manager_stats', $stats);
                 update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
 
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $storeManager->display_name);
+                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $storeManager->display_name, 'store_manager');
                 
                 $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                // wp_mail($user_email, $subject, $htmlTemplate, $headers);
-                // wp_mail('fzulfiqar@hightideinc.com', $subject, $htmlTemplate, $headers);
+                wp_mail($user_email, $subject, $htmlTemplate, $headers);
             }
         }
     }
@@ -393,7 +486,7 @@ function send_learn_dash_weekly_report_manager_func() {
                 continue;
             }
             
-            $subject = 'Weekly Summary Report - '.date('d-M-Y', time()).' for Cannabis Learning';
+            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
             $user_id = $areaManager->ID;
             $user_email = $areaManager->user_email;
             $lastWeekHtml = '';
@@ -403,22 +496,11 @@ function send_learn_dash_weekly_report_manager_func() {
             $activeGroupsHtml = '';
             $activeGroups = array();
 
-            $users = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT u.ID, m1.meta_value AS user_locked
-                    FROM {$wpdb->users} u
-                    INNER JOIN {$wpdb->usermeta} m 
-                    ON m.user_id = u.ID AND m.meta_key = 'supervisor' AND m.meta_value = %d
-                    LEFT JOIN wp_usermeta m1 ON m1.user_id = u.ID AND m1.meta_key = 'baba_user_locked'",
-                    $user_id,
-                )
-            );
+            // Ticket: AM sees SM+below (via SM rollups); follows up with Store Managers.
+            $users = lc_manager_report_get_direct_reports( $user_id, array( 'Store Manager' ) );
 
             if(count($users) > 0){
                 foreach ( $users as $user ) {
-                    if($user->user_locked != NULL && $user->user_locked === 'yes'){
-                        continue;
-                    }
                     $lc_manager_stats = get_user_meta($user->ID, 'lc_manager_stats', true);
                     $lc_manager_groups_stats = get_user_meta($user->ID, 'lc_manager_groups_stats', true);
                     
@@ -463,11 +545,10 @@ function send_learn_dash_weekly_report_manager_func() {
                 update_user_meta($user_id, 'lc_manager_stats', $stats);
                 update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
 
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $areaManager->display_name);
+                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $areaManager->display_name, 'area_manager');
 
                 $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                // wp_mail($user_email, $subject, $htmlTemplate, $headers);
-                // wp_mail('fzulfiqar@hightideinc.com', $subject, $htmlTemplate, $headers);
+                wp_mail($user_email, $subject, $htmlTemplate, $headers);
             }
         }
     }
@@ -479,7 +560,7 @@ function send_learn_dash_weekly_report_manager_func() {
                 continue;
             }
             
-            $subject = 'Weekly Summary Report - '.date('d-M-Y', time()).' for Cannabis Learning';
+            $subject = 'Weekly Learning Follow-up Reminder - '.date('d-M-Y', time()).' for Cannabis Learning';
             $user_id = $districtManager->ID;
             $user_email = $districtManager->user_email;
             $lastWeekHtml = '';
@@ -489,22 +570,11 @@ function send_learn_dash_weekly_report_manager_func() {
             $activeGroupsHtml = '';
             $activeGroups = array();
 
-            $users = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT u.ID, m1.meta_value AS user_locked
-                    FROM {$wpdb->users} u
-                    INNER JOIN {$wpdb->usermeta} m 
-                    ON m.user_id = u.ID AND m.meta_key = 'supervisor' AND m.meta_value = %d
-                    LEFT JOIN wp_usermeta m1 ON m1.user_id = u.ID AND m1.meta_key = 'baba_user_locked'",
-                    $user_id,
-                )
-            );
+            // Ticket: DM sees AM+below (via AM rollups); follows up with Area Managers.
+            $users = lc_manager_report_get_direct_reports( $user_id, array( 'Area Manager' ) );
 
             if(count($users) > 0){
                 foreach ( $users as $user ) {
-                    if($user->user_locked != NULL && $user->user_locked === 'yes'){
-                        continue;
-                    }
                     $lc_manager_stats = get_user_meta($user->ID, 'lc_manager_stats', true);
                     $lc_manager_groups_stats = get_user_meta($user->ID, 'lc_manager_groups_stats', true);
                     
@@ -549,34 +619,16 @@ function send_learn_dash_weekly_report_manager_func() {
                 update_user_meta($user_id, 'lc_manager_stats', $stats);
                 update_user_meta($user_id, 'lc_manager_groups_stats', $activeGroups);
 
-                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $districtManager->display_name);
+                $htmlTemplate = lcGenerateTemplate($stats, $activeGroups, $districtManager->display_name, 'district_manager');
 
                 $headers = array('Content-Type: text/html; charset=UTF-8','From: Learncabana <admin@learncabana.com>');
-                // wp_mail($user_email, $subject, $htmlTemplate, $headers);
-                // wp_mail('fzulfiqar@hightideinc.com', $subject, $htmlTemplate, $headers);
+                wp_mail($user_email, $subject, $htmlTemplate, $headers);
             }
         }
     }
-    // else {
-        
-       // wp_mail('mbasitmunir@hightideinc.com', "debugging", "subscribers :". count($users));
-        // $users = [$managers[0]];
-        // $subject = 'Weekly Summary Report - '.date('d-M-Y', time()).' for Cannabis Learning';
-        // $htmlTemplate = $message = file_get_contents(dirname(__FILE__) .'/manager-report.php');
-        /**
-         * ob_start();
-         include(get_stylesheet_directory() . '/email-template.php');//Template File Path
-         $body = ob_get_contents();
-         ob_end_clean();
-         */
-    //    $headers = array('Content-Type: text/html; charset=UTF-8','From: Test <test@test.com>');
-        // Send the email
-        // wp_mail('mbasitmunir@hightideinc.com', $subject, $htmlTemplate, $headers);
-        
-    // }
 }
 
-function lcGenerateTemplate($stats, $activeGroups, $display_name){
+function lcGenerateTemplate($stats, $activeGroups, $display_name, $role = 'store_manager'){
     $lastWeekHtml = '';
     $totalEnrollmentsHtml = '';
     $learningPlansHtml = '';
@@ -614,8 +666,9 @@ function lcGenerateTemplate($stats, $activeGroups, $display_name){
 
     foreach($activeGroups as $group_id => $activeGroup){
         $groupDetail = get_post($group_id);
+        $group_title = ( $groupDetail && ! empty( $groupDetail->post_title ) ) ? $groupDetail->post_title : ( 'Group #' . $group_id );
         $activeGroupsHtml .= "<tr>";
-        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>".$groupDetail->post_title."</td>";
+        $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; border-left: 1px solid #e6e6e6; text-align: center;'>".$group_title."</td>";
         $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['enrolled']."</td>";
         $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['not_started']."</td>";
         $activeGroupsHtml .= "<td style='border-bottom: 1px solid #e4e4e4; padding:5px 10px; text-align: center;'>".$activeGroup['total']['in_progress']."</td>";
@@ -632,18 +685,129 @@ function lcGenerateTemplate($stats, $activeGroups, $display_name){
     $htmlTemplate = str_replace("{learningPlans}", $learningPlansHtml, $htmlTemplate);
     $htmlTemplate = str_replace("{actionStatus}", $actionStatusHtml, $htmlTemplate);
     $htmlTemplate = str_replace("{activeGroups}", $activeGroupsHtml, $htmlTemplate);
+    $htmlTemplate = str_replace("{follow_up_note}", lc_manager_report_follow_up_note( $role ), $htmlTemplate);
 
     return $htmlTemplate;
 }
 
+/**
+ * Schedule manager follow-up for Mondays 07:00 (site timezone).
+ * Uses weekly interval from the next Monday anchor.
+ */
 function schedule_learn_dash_weekly__manager_report() {
-    if (!wp_next_scheduled('send_learn_dash_weekly_manager_report')) {
-        wp_schedule_event(time(), 'daily', 'send_learn_dash_weekly_manager_report');
+    $hook = 'send_learn_dash_weekly_manager_report';
+
+    // Migrate away from any prior daily / mistimed schedule.
+    $existing = wp_next_scheduled( $hook );
+    if ( $existing ) {
+        $local_dow = (int) wp_date( 'N', $existing );
+        $local_hour = (int) wp_date( 'G', $existing );
+        if ( 1 !== $local_dow || 7 !== $local_hour ) {
+            wp_unschedule_event( $existing, $hook );
+            $existing = false;
+        }
+    }
+
+    if ( ! $existing ) {
+        $tz = wp_timezone();
+        $now = new DateTimeImmutable( 'now', $tz );
+        $next = $now->modify( 'next Monday' )->setTime( 7, 0, 0 );
+        // If today is Monday and before 07:00, use today.
+        if ( 1 === (int) $now->format( 'N' ) && (int) $now->format( 'G' ) < 7 ) {
+            $next = $now->setTime( 7, 0, 0 );
+        }
+        wp_schedule_event( $next->getTimestamp(), 'weekly', $hook );
     }
 }
 
-// Schedule the weekly report function
-// add_action('wp', 'schedule_learn_dash_weekly__manager_report');
+add_action( 'wp', 'schedule_learn_dash_weekly__manager_report' );
+add_action( 'send_learn_dash_weekly_manager_report', 'send_learn_dash_weekly_report_manager_func' );
 
-// Hook the function to the scheduled event
-add_action('send_learn_dash_weekly_manager_report', 'send_learn_dash_weekly_report_manager_func');
+/**
+ * Secure admin-only run URL (nonce + manage_options).
+ * Prefer the Tools page button; URL shape:
+ *   /wp-admin/admin-post.php?action=lc_run_manager_report&_wpnonce=...
+ */
+function lc_manager_report_get_secure_run_url() {
+	return wp_nonce_url(
+		admin_url( 'admin-post.php?action=lc_run_manager_report' ),
+		'lc_run_manager_report'
+	);
+}
+
+/**
+ * Handle secure admin run — emails all in-scope SM / AM / DM.
+ */
+function lc_manager_report_handle_secure_admin_run() {
+	if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'Forbidden', 'astra-child' ), 403 );
+	}
+
+	check_admin_referer( 'lc_run_manager_report' );
+
+	$GLOBALS['lc_manager_report_force'] = true;
+	send_learn_dash_weekly_report_manager_func();
+	unset( $GLOBALS['lc_manager_report_force'] );
+
+	wp_safe_redirect(
+		add_query_arg(
+			'lc_manager_report',
+			'done',
+			admin_url( 'tools.php?page=lc-manager-report-test' )
+		)
+	);
+	exit;
+}
+add_action( 'admin_post_lc_run_manager_report', 'lc_manager_report_handle_secure_admin_run' );
+
+/**
+ * Tools → Manager Follow-up Test (admins only).
+ */
+function lc_manager_report_register_tools_page() {
+	add_management_page(
+		__( 'Manager Follow-up Test', 'astra-child' ),
+		__( 'Manager Follow-up Test', 'astra-child' ),
+		'manage_options',
+		'lc-manager-report-test',
+		'lc_manager_report_render_tools_page'
+	);
+}
+add_action( 'admin_menu', 'lc_manager_report_register_tools_page' );
+
+/**
+ * Render Tools page with Run button + secure URL.
+ */
+function lc_manager_report_render_tools_page() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$done = isset( $_GET['lc_manager_report'] ) && 'done' === $_GET['lc_manager_report']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$url  = lc_manager_report_get_secure_run_url();
+	?>
+	<div class="wrap">
+		<h1><?php esc_html_e( 'Manager Learning Follow-up Test', 'astra-child' ); ?></h1>
+
+		<?php if ( $done ) : ?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php esc_html_e( 'Manager follow-up job finished (SM -> AM -> DM). Check WP Mail SMTP Email Log for results.', 'astra-child' ); ?></p>
+			</div>
+		<?php endif; ?>
+
+		<div class="notice notice-warning">
+			<p><strong><?php esc_html_e( 'Warning:', 'astra-child' ); ?></strong>
+			<?php esc_html_e( 'This sends real emails to all unlocked Store, Area, and District Managers who have in-scope teams. Confirm mail delivery is working first.', 'astra-child' ); ?></p>
+		</div>
+
+		<p>
+			<a class="button button-primary" href="<?php echo esc_url( $url ); ?>"
+				onclick="return confirm('Send Weekly Learning Follow-up emails to all in-scope managers now?');">
+				<?php esc_html_e( 'Run manager follow-up now', 'astra-child' ); ?>
+			</a>
+		</p>
+
+		<p><strong><?php esc_html_e( 'Secure admin URL (expires with your login nonce):', 'astra-child' ); ?></strong></p>
+		<p><code style="word-break:break-all;"><?php echo esc_html( $url ); ?></code></p>
+	</div>
+	<?php
+}
