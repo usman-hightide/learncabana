@@ -50,14 +50,17 @@ function send_learn_dash_weekly_report_func() {
             $user_id = $user->ID;
             $user_email = $user->user_email;
 
-            // Check if baba_user_locked is yes for the current user
-            $baba_user_locked = get_user_meta($user_id, 'baba_user_locked', true);
-            if ($baba_user_locked === 'yes') {
-                continue; // Skip sending email if baba_user_locked is true for the user
+            // Skip locked / offboarded accounts.
+            if ( function_exists( 'lc_is_user_account_locked' ) && lc_is_user_account_locked( $user_id ) ) {
+                continue;
             }
 
             // Retrieve user stats for the past week
             $enrolled_courses = learndash_user_get_enrolled_courses($user_id);
+            // No active enrollments — nothing useful to remind about.
+            if ( empty( $enrolled_courses ) ) {
+                continue;
+            }
             /*if($user_email == '19ckoehli86@gmail.com') {
 
             echo "<pre>";
@@ -839,7 +842,7 @@ function send_learn_dash_weekly_report_manager_func() {
 	);
 
 	foreach ( $store_managers as $manager ) {
-		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+		if ( function_exists( 'lc_is_user_account_locked' ) && lc_is_user_account_locked( $manager->ID ) ) {
 			continue;
 		}
 		list( $stats, $groups ) = lc_manager_build_store_manager_stats( $manager->ID, $last_week_time );
@@ -853,7 +856,7 @@ function send_learn_dash_weekly_report_manager_func() {
 	}
 
 	foreach ( $area_managers as $manager ) {
-		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+		if ( function_exists( 'lc_is_user_account_locked' ) && lc_is_user_account_locked( $manager->ID ) ) {
 			continue;
 		}
 		list( $stats, $groups ) = lc_manager_rollup_from_child_managers( $manager->ID, array( 'Store Manager' ) );
@@ -867,7 +870,7 @@ function send_learn_dash_weekly_report_manager_func() {
 	}
 
 	foreach ( $district_managers as $manager ) {
-		if ( 'yes' === get_user_meta( $manager->ID, 'baba_user_locked', true ) ) {
+		if ( function_exists( 'lc_is_user_account_locked' ) && lc_is_user_account_locked( $manager->ID ) ) {
 			continue;
 		}
 		list( $stats, $groups ) = lc_manager_rollup_from_child_managers( $manager->ID, array( 'Area Manager' ) );

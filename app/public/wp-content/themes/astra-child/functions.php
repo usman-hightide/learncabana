@@ -185,6 +185,8 @@ add_filter('learndash_email_recipient', 'block_user_from_course_enrollment_email
 
 /************************************************/
 
+// Block automated emails to locked accounts (must load before weekly report helpers).
+require_once get_stylesheet_directory() . '/inc/locked-user-emails.php';
 
 require_once dirname(__FILE__) . '/custom-reports/custom-learning-reports.php';
 
@@ -213,6 +215,15 @@ add_action('profile_update', 'schedule_email_based_on_date', 10, 2);
 function send_email_function($user_id) {
     // Get user details
     $user = get_user_by('ID', $user_id);
+	if ( ! $user ) {
+		return;
+	}
+
+	// Do not send license reminders to locked / offboarded accounts.
+	if ( function_exists( 'lc_is_user_account_locked' ) && lc_is_user_account_locked( $user_id ) ) {
+		return;
+	}
+
     $email = $user->user_email;
 	$date = get_field('expiry_date', 'user_' . $user_id);
     
@@ -242,24 +253,6 @@ function disable_group_leader_enrollment($group_leader_id, $group_id, $course_id
     }
 }*/
 /************************************/
-
-function stop_mails_to_locked_users($recipients, $email){
-    $locked_users = get_locked_users(); // Assuming you have a function that retrieves locked users.
-    
-    // Convert both arrays to lowercase for reliable comparison
-    $recipients = array_map('strtolower', $recipients);
-    $locked_users = array_map('strtolower', $locked_users);
-    
-    // Find the difference between the arrays
-    $valid_recipients = array_diff($recipients, $locked_users);
-    
-    return $valid_recipients;
-}
-
-// Use the filter provided by your LMS plugin, 'lms_email_recipients' is just a placeholder.
-add_filter('lms_email_recipients', 'stop_mails_to_locked_users', 10, 2);
-
-
 
 //New User Register Email WIth Temporary password
 
